@@ -1,3 +1,5 @@
+console.log('wpjsutils initializing');
+
 window.JSUtils = window.JSUtils || {
   copyToClipboard: text => {
     var inp = document.createElement('input');

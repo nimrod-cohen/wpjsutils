@@ -37,17 +37,17 @@ class WPJSUtils {
 
   function init() {
     $cachebust = date('Y_m_d_H');
-    wp_enqueue_script( 'js-utils', plugin_dir_url(__FILE__).'js/jsutils.js?time='.$cachebust);
-    wp_enqueue_script( 'remodaler-js', plugin_dir_url(__FILE__).'js/remodaler.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_script( 'wpjsutils', plugin_dir_url(__FILE__).'js/jsutils.js?time='.$cachebust);
+    wp_enqueue_script( 'remodaler-js', plugin_dir_url(__FILE__).'js/remodaler.js?time='.$cachebust,["wpjsutils"]);
     wp_enqueue_style( 'remodaler-css', plugin_dir_url(__FILE__).'css/remodaler.css?time='.$cachebust);
-    wp_enqueue_script( 'popover-js', plugin_dir_url(__FILE__).'js/popover.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_script( 'popover-js', plugin_dir_url(__FILE__).'js/popover.js?time='.$cachebust,["wpjsutils"]);
     wp_enqueue_style( 'popover-css', plugin_dir_url(__FILE__).'css/popover.css?time='.$cachebust);
-    wp_enqueue_script( 'notifications-js', plugin_dir_url(__FILE__).'js/notifications.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_script( 'notifications-js', plugin_dir_url(__FILE__).'js/notifications.js?time='.$cachebust,["wpjsutils"]);
     wp_enqueue_style( 'notifications-css', plugin_dir_url(__FILE__).'css/notifications.css?time='.$cachebust);
     
-    wp_enqueue_script( 'infinity-js', plugin_dir_url(__FILE__).'js/infinityscroll.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_script( 'infinity-js', plugin_dir_url(__FILE__).'js/infinityscroll.js?time='.$cachebust,["wpjsutils"]);
     
-    wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js?time='.$cachebust,["wpjsutils"]);
     wp_enqueue_style( 'monthpicker-css', plugin_dir_url(__FILE__).'css/monthpicker.css?time='.$cachebust);    
   }
 }

@@ -1,0 +1,140 @@
+:root {
+  --button: #4a4aaf;
+  --button-danger: #e61364;
+  --button-secondary: #efefef;
+  --button-secondary-text: #929292;
+  --separator-color: #f0f0f0;
+}
+
+.remodal-bg {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 99999;
+}
+
+.remodal {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  position: relative;
+  max-width: 800px;
+  min-width: 500px;
+  background: white;
+  margin: 0 auto;
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.remodal h2 {
+  text-align: center;
+  margin-top: 10px;
+  border-bottom: solid 1px var(--separator-color);
+}
+
+.remodal .remodal-confirm,
+.remodal .remodal-cancel {
+  float: right;
+  margin-left: 10px;
+  width: 160px;
+}
+
+.remodal p {
+  margin: 25px 0;
+}
+
+.remodal p[data-remodal-message] a {
+  text-decoration: underline;
+}
+
+.remodal button[data-remodal-action] {
+  cursor: pointer;
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+}
+
+.remodal .remodal-close,
+.remodal .remodal-close:before {
+  display: block;
+  font-size: 25px;
+  width: 35px;
+  line-height: 35px;
+  text-align: center;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: transparent;
+  cursor: pointer;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+  color: #95979c;
+  padding: 0;
+  margin: 0;
+}
+
+.remodal .remodal-close:hover {
+  color: black;
+}
+
+.remodal .remodal-confirm {
+  color: #fff;
+  background: var(--button);
+}
+
+.remodal .remodal-cancel {
+  color: var(--button-secondary-text);
+  background: var(--button-secondary);
+}
+
+.remodal .remodal-cancel,
+.remodal .remodal-confirm {
+  display: inline-block;
+  vertical-align: middle;
+  font: inherit;
+  min-width: 110px;
+  padding: 12px 0;
+  -webkit-transition: background 0.2s;
+  transition: background 0.2s;
+  text-align: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.remodal input,
+.remodal select {
+  width: 100%;
+  height: 2em;
+  font-size: 1em;
+}
+
+@media only screen and (max-width: 500px) {
+  .remodal {
+    padding: 15px;
+    min-width: 320px;
+    width: 100%;
+  }
+  .remodal p {
+    margin: 10px 0;
+  }
+  .remodal .remodal-confirm,
+  .remodal .remodal-cancel {
+    width: 130px;
+    font-size: 0.85em;
+    margin-left: 4px;
+  }
+}
+/*# sourceMappingURL=remodaler.css.map */

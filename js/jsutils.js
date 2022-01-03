@@ -2,16 +2,20 @@ console.log('wpjsutils initializing');
 
 window.JSUtils = window.JSUtils || {
   copyToClipboard: text => {
-    var inp = document.createElement('input');
-    inp.value = text;
-    inp.style.position = 'fixed';
-    inp.style.top = '-1000px';
-    document.body.appendChild(inp);
-    inp.focus();
-    inp.select();
-    inp.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    document.body.removeChild(inp);
+    if (!navigator.clipboard) {
+      var inp = document.createElement('input');
+      inp.value = text;
+      inp.style.position = 'fixed';
+      inp.style.top = '-1000px';
+      document.body.appendChild(inp);
+      inp.focus();
+      inp.select();
+      inp.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      document.body.removeChild(inp);
+    } else {
+      navigator.clipboard.writeText(text);
+    }
   },
 
   //wait for document to be ready

@@ -16,14 +16,14 @@
 
         if (!self._initialized) self._init();
 
-        if (typeof self._options.type == 'undefined') self._options.type = self.types.ALERT;
+        if (typeof self._options.type === 'undefined') self._options.type = self.types.ALERT;
 
         document.querySelector('.remodal h2[data-remodal-title]').innerText = self._options.title;
         document.querySelector('.remodal p[data-remodal-message]').innerHTML =
           self._options.message;
 
-        if (self._options.type == self.types.INPUT) {
-          if (typeof self._options.values == 'undefined')
+        if (self._options.type === self.types.INPUT) {
+          if (typeof self._options.values === 'undefined')
             document.querySelector('.remodal p[data-remodal-input]').innerHTML =
               "<input type='text' name='remodal-data-input'>";
           else {
@@ -58,7 +58,7 @@
         document.querySelector('[data-remodal-input]').style.display =
           self._options.type !== self.types.INPUT ? 'none' : 'block';
 
-        if (typeof this._options.init == 'function') this._options.init();
+        if (typeof this._options.init === 'function') this._options.init();
 
         self._show();
       },
@@ -68,7 +68,7 @@
       },
 
       _confirm: function (val) {
-        if (typeof this._options.confirm == 'function') this._options.confirm(val);
+        if (typeof this._options.confirm === 'function') this._options.confirm(val);
       },
 
       _init: function () {
@@ -89,8 +89,7 @@
         document.querySelector('.remodal-confirm').addEventListener('click', ev => {
           ev.preventDefault();
           document.querySelector('.remodal-bg').style.display = 'none';
-          var event = document.createEvent('HTMLEvents');
-          event.initEvent('confirmation', true, false);
+          var event = new Event('confirmation', { bubbles: true, cancelable: false });
           document.querySelector('.remodal').dispatchEvent(event);
         });
 
@@ -99,8 +98,7 @@
           btn.addEventListener('click', ev => {
             ev.preventDefault();
             document.querySelector('.remodal-bg').style.display = 'none';
-            var event = document.createEvent('HTMLEvents');
-            event.initEvent('cancellation', true, false);
+            var event = new Event('cancellation', { bubbles: true, cancelable: false });
             document.querySelector('.remodal').dispatchEvent(event);
           })
         );
@@ -113,9 +111,9 @@
             self._confirm(val);
           } else {
             let form = {};
-            document
-              .querySelectorAll('.remodal p[data-remodal-message] input')
-              .forEach(inp => (form[inp.getAttribute('name')] = inp.value));
+            document.querySelectorAll('.remodal p[data-remodal-message] input').forEach(inp => {
+              if (inp.type !== 'radio' || inp.checked) form[inp.getAttribute('name')] = inp.value;
+            });
             self._confirm(form);
           }
         });

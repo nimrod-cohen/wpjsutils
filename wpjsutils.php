@@ -44,6 +44,11 @@ class WPJSUtils {
     wp_enqueue_style( 'popover-css', plugin_dir_url(__FILE__).'css/popover.css?time='.$cachebust);
     wp_enqueue_script( 'notifications-js', plugin_dir_url(__FILE__).'js/notifications.js?time='.$cachebust,["js-utils"]);
     wp_enqueue_style( 'notifications-css', plugin_dir_url(__FILE__).'css/notifications.css?time='.$cachebust);
+    
+    wp_enqueue_script( 'infinity-js', plugin_dir_url(__FILE__).'js/infinityscroll.js?time='.$cachebust,["js-utils"]);
+    
+    wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js?time='.$cachebust,["js-utils"]);
+    wp_enqueue_style( 'monthpicker-css', plugin_dir_url(__FILE__).'css/monthpicker.css?time='.$cachebust);    
   }
 }
 

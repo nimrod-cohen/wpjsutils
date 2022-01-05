@@ -81,8 +81,9 @@ if (typeof window.StateManagerFactory === 'undefined') {
         //no change, no events
         if (value === this.state[item].value) return;
 
+        let old = this.state[item].value;
         this.state[item].value = value;
-        this.state[item].fns.forEach(fn => fn(value));
+        this.state[item].fns.forEach(fn => fn(value, old));
       };
 
       listen = (item, fn) => {

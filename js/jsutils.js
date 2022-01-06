@@ -73,7 +73,8 @@ if (typeof window.StateManagerFactory === 'undefined') {
 
       get = item => (this.state[item] ? this.state[item].value : undefined);
 
-      set = (item, value) => {
+      //force calls the liseners even if no change has occured
+      set = (item, value, force = false) => {
         if (!this.state[item]) {
           this.state[item] = this.emptyItem();
         }

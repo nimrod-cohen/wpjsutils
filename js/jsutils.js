@@ -80,7 +80,7 @@ if (typeof window.StateManagerFactory === 'undefined') {
         }
 
         //no change, no events
-        if (value === this.state[item].value) return;
+        if (!force && value === this.state[item].value) return;
 
         let old = this.state[item].value;
         this.state[item].value = value;

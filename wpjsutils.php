@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.0.0
+* Version: 1.0.2
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -49,6 +49,8 @@ class WPJSUtils {
     
     wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js?time='.$cachebust,["wpjsutils"]);
     wp_enqueue_style( 'monthpicker-css', plugin_dir_url(__FILE__).'css/monthpicker.css?time='.$cachebust);    
+    wp_enqueue_script( 'switch-js', plugin_dir_url(__FILE__).'js/switch.js?time='.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'switch-css', plugin_dir_url(__FILE__).'css/switch.css?time='.$cachebust);    
   }
 }
 

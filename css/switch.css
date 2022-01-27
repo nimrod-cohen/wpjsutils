@@ -2,8 +2,8 @@
 .switch-wrapper {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 26px;
+  width: 40px;
+  height: 22px;
 }
 
 .switch-wrapper input {
@@ -17,8 +17,8 @@
 }
 
 .switch-wrapper input:checked + .slider:before {
-  -webkit-transform: translateX(22px);
-          transform: translateX(22px);
+  -webkit-transform: translateX(18px);
+          transform: translateX(18px);
 }
 
 .switch-wrapper input:focus + .slider {
@@ -40,11 +40,11 @@
 
 .switch-wrapper .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 18px;
   width: 18px;
-  left: 4px;
-  bottom: 4px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;

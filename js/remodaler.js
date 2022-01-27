@@ -19,8 +19,7 @@
         if (typeof self._options.type === 'undefined') self._options.type = self.types.ALERT;
 
         document.querySelector('.remodal h2[data-remodal-title]').innerText = self._options.title;
-        document.querySelector('.remodal p[data-remodal-message]').innerHTML =
-          self._options.message;
+        document.querySelector('.remodal p[data-remodal-message]').innerHTML = self._options.message;
 
         if (self._options.type === self.types.INPUT) {
           if (typeof self._options.values === 'undefined')
@@ -44,14 +43,12 @@
 
         switch (self._options.type) {
           case self.types.ALERT:
-            document.querySelector(".remodal button[data-remodal-action='cancel']").style.display =
-              'none';
+            document.querySelector(".remodal button[data-remodal-action='cancel']").style.display = 'none';
             break;
           case self.types.CONFIRM:
           case self.types.FORM:
           case self.types.INPUT:
-            document.querySelector(".remodal button[data-remodal-action='cancel']").style.display =
-              'block';
+            document.querySelector(".remodal button[data-remodal-action='cancel']").style.display = 'block';
             break;
         }
 
@@ -74,16 +71,18 @@
       _init: function () {
         document.body.insertAdjacentHTML(
           'afterend',
-          "<div class='remodal-bg'>" +
-            "<div class='remodal' data-remodal-id='modal'>" +
-            "<button data-remodal-action='close' class='remodal-close'>&#x00D7;</button>" +
-            '<h2 data-remodal-title></h2>' +
-            '<p data-remodal-message></p>' +
-            '<p data-remodal-input></p>' +
-            "<button data-remodal-action='confirm' class='remodal-confirm'>OK</button>" +
-            "<button data-remodal-action='cancel' class='remodal-cancel'>cancel</button> " +
-            '</div>' +
-            '</div>'
+          `<div class='remodal-bg'>
+            <div class='remodal' data-remodal-id='modal'>
+              <div class='remodal-header'>
+                <button data-remodal-action='close' class='remodal-close'>&#x00D7;</button>
+                <h2 data-remodal-title></h2>
+              </div>
+              <p data-remodal-message></p>
+              <p data-remodal-input></p>
+              <button data-remodal-action='confirm' class='remodal-confirm'>OK</button>
+              <button data-remodal-action='cancel' class='remodal-cancel'>cancel</button>
+            </div>
+          </div>`
         );
 
         document.querySelector('.remodal-confirm').addEventListener('click', ev => {

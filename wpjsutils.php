@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2

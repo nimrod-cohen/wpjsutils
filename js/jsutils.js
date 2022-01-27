@@ -18,6 +18,15 @@ window.JSUtils = window.JSUtils || {
     }
   },
 
+  guid: (prefix = '') => {
+    const s4 = () =>
+      Math.floor(Math.random() * 65536)
+        .toString(16)
+        .padStart(4, '0');
+    let p = prefix || '';
+    return p + s4() + s4() + '-' + s4() + '-' + '4' + s4().substring(1) + '-' + s4() + '-' + s4() + s4() + s4();
+  },
+
   //wait for document to be ready
   domReady: fn => {
     if (

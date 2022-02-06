@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.0.7
+* Version: 1.0.8
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -85,7 +85,7 @@ class WPJSUtils {
       $response = fgets($connect);
       if(!preg_match("/^220/i", $response)) throw new Exception('Domain refused connection');
       
-      fputs($connect , "HELO ".$fromDomain."\r\n");
+      fputs($connect , "EHLO ".$fromDomain."\r\n");
       $response = fgets($connect);
 
       fputs($connect , "MAIL FROM: <".$from.">\r\n");
@@ -120,9 +120,13 @@ class WPJSUtils {
 
       if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
 
+      /*
       //TODO: this check is dangerous, as some email providers like yahoo/hotmail will check that your server is allowed to send these emails.
       //or maybe they expect something else here.
-      //if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
+      if(!strstr($domain, 'yahoo') && !strstr($domain, 'hotmail')) {
+         if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
+      }
+      */
      
     } catch(Exception $ex) {
       $result["success"] = false;

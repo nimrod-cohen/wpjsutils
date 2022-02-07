@@ -16,7 +16,9 @@ JSUtils.loadDisposableEmailDomains = async () => {
     };
 
     let result = await (
-      await fetch('https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json')
+      await fetch(
+        'https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json'
+      )
     ).json();
     JSUtils.disposable_email_domains = result;
   } catch (e) {
@@ -29,7 +31,7 @@ JSUtils.loadDisposableEmailDomains();
 
 JSUtils.validateEmailAddress = async email => {
   email = email.toLowerCase().trim();
-  var emailRE = /^(?:\w+(?:[\w\-]+)?\.?)+@[\w\-]+(\.\w+){1,}$/gi;
+  var emailRE = /^(?:\w+\+(?:[\w\-]+)?\.?)+@[\w\-]+(\.\w+){1,}$/gi;
 
   if (!emailRE.test(email)) return false;
 
@@ -37,7 +39,8 @@ JSUtils.validateEmailAddress = async email => {
 
   if (Object.keys(JSUtils.unlikely_email_domains).indexOf(domain) >= 0) return false;
 
-  if (JSUtils.disposable_email_domains && JSUtils.disposable_email_domains.indexOf(domain) >= 0) return false;
+  if (JSUtils.disposable_email_domains && JSUtils.disposable_email_domains.indexOf(domain) >= 0)
+    return false;
 
   let result = await JSUtils.fetch(window.wpjsutils_data.ajax_url, {
     action: 'check_email',

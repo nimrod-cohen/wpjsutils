@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.0.9
+* Version: 1.0.10
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -39,22 +39,25 @@ class WPJSUtils {
   }
 
   function init() {
-    $cachebust = date('Y_m_d_H');
-    wp_enqueue_script( 'wpjsutils', plugin_dir_url(__FILE__).'js/jsutils.js?time='.$cachebust);
-    wp_enqueue_script( 'emailvalidator-js', plugin_dir_url(__FILE__).'js/emailvalidator.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_script( 'remodaler-js', plugin_dir_url(__FILE__).'js/remodaler.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_style( 'remodaler-css', plugin_dir_url(__FILE__).'css/remodaler.css?time='.$cachebust);
-    wp_enqueue_script( 'popover-js', plugin_dir_url(__FILE__).'js/popover.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_style( 'popover-css', plugin_dir_url(__FILE__).'css/popover.css?time='.$cachebust);
-    wp_enqueue_script( 'notifications-js', plugin_dir_url(__FILE__).'js/notifications.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_style( 'notifications-css', plugin_dir_url(__FILE__).'css/notifications.css?time='.$cachebust);
+    $plugin_data = get_plugin_data( __FILE__ );
+    $plugin_version = $plugin_data['Version'];
+    $cachebust = "?time=".date('Y_m_d_H')."&v=".$plugin_version;
+
+    wp_enqueue_script( 'wpjsutils', plugin_dir_url(__FILE__).'js/jsutils.js'.$cachebust);
+    wp_enqueue_script( 'emailvalidator-js', plugin_dir_url(__FILE__).'js/emailvalidator.js'.$cachebust,["wpjsutils"]);
+    wp_enqueue_script( 'remodaler-js', plugin_dir_url(__FILE__).'js/remodaler.js'.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'remodaler-css', plugin_dir_url(__FILE__).'css/remodaler.css'.$cachebust);
+    wp_enqueue_script( 'popover-js', plugin_dir_url(__FILE__).'js/popover.js'.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'popover-css', plugin_dir_url(__FILE__).'css/popover.css'.$cachebust);
+    wp_enqueue_script( 'notifications-js', plugin_dir_url(__FILE__).'js/notifications.js?'.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'notifications-css', plugin_dir_url(__FILE__).'css/notifications.css'.$cachebust);
     
-    wp_enqueue_script( 'infinity-js', plugin_dir_url(__FILE__).'js/infinityscroll.js?time='.$cachebust,["wpjsutils"]);
+    wp_enqueue_script( 'infinity-js', plugin_dir_url(__FILE__).'js/infinityscroll.js'.$cachebust,["wpjsutils"]);
     
-    wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_style( 'monthpicker-css', plugin_dir_url(__FILE__).'css/monthpicker.css?time='.$cachebust);    
-    wp_enqueue_script( 'switch-js', plugin_dir_url(__FILE__).'js/switch.js?time='.$cachebust,["wpjsutils"]);
-    wp_enqueue_style( 'switch-css', plugin_dir_url(__FILE__).'css/switch.css?time='.$cachebust);
+    wp_enqueue_script( 'monthpicker-js', plugin_dir_url(__FILE__).'js/monthpicker.js'.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'monthpicker-css', plugin_dir_url(__FILE__).'css/monthpicker.css'.$cachebust);    
+    wp_enqueue_script( 'switch-js', plugin_dir_url(__FILE__).'js/switch.js'.$cachebust,["wpjsutils"]);
+    wp_enqueue_style( 'switch-css', plugin_dir_url(__FILE__).'css/switch.css'.$cachebust);
 
     wp_localize_script('wpjsutils',
 		'wpjsutils_data', [
@@ -120,14 +123,11 @@ class WPJSUtils {
 
       if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
 
-      /*
       //TODO: this check is dangerous, as some email providers like yahoo/hotmail will check that your server is allowed to send these emails.
       //or maybe they expect something else here.
       if(!strstr($domain, 'yahoo') && !strstr($domain, 'hotmail')) {
          if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
-      }
-      */
-     
+      }     
     } catch(Exception $ex) {
       $result["success"] = false;
     }

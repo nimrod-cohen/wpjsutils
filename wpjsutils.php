@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.1.0
+* Version: 1.1.1
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -121,7 +121,12 @@ class WPJSUtils {
 
       if($domain == 'gmail.com' && strlen($user) <= 4) throw new Exception("Gmail address too short");
 
-      if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
+      $dig = shell_exec("dig MX ".$domain." +short");
+
+      if(strlen($dig) == 0) throw new Exception('Domain without MX records');
+
+      //this returns a bogus mx203.inbound-mx.org and mx203.inbound-mx.net records on the server.
+      //if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
 
       //TODO: this check is dangerous, as some email providers like yahoo/hotmail will check that your server is allowed to send these emails.
       //or maybe they expect something else here.

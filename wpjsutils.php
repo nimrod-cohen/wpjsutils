@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.0.10
+* Version: 1.1.0
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -119,7 +119,7 @@ class WPJSUtils {
 
       list($user, $domain) = explode('@', $email);
 
-      if($domain == 'gmail.com' && strlen($user) >= 4) throw new Exception("Gmail address too short");
+      if($domain == 'gmail.com' && strlen($user) <= 4) throw new Exception("Gmail address too short");
 
       if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
 

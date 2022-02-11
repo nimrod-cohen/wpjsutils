@@ -3,7 +3,7 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.1.2
+* Version: 1.1.3
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
 * Tested up to: 5.8.2
@@ -65,6 +65,7 @@ class WPJSUtils {
 		]);
   }
 
+  /*
   function checkEmailSMTP($email) {
     $connect = null;
     $result = true;
@@ -109,6 +110,7 @@ class WPJSUtils {
 
     return $result;
   }
+  */
 
   function checkEmailAddress() {
     $result = ["success" => true];
@@ -128,11 +130,10 @@ class WPJSUtils {
       //this returns a bogus mx203.inbound-mx.org and mx203.inbound-mx.net records on the server.
       //if(!checkdnsrr($domain, 'MX')) throw new Exception('Domain without MX records');
 
-      //TODO: this check is dangerous, as some email providers like yahoo/hotmail will check that your server is allowed to send these emails.
-      //or maybe they expect something else here.
-      if(!strstr($domain, 'yahoo') && !strstr($domain, 'hotmail')) {
-         if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
-      }     
+      //this check is too dangerous - can hang and can just take too much time.
+      // if(!strstr($domain, 'yahoo') && !strstr($domain, 'hotmail')) {
+      //    if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
+      // }     
     } catch(Exception $ex) {
       $result["success"] = false;
     }

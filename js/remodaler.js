@@ -111,7 +111,8 @@
           } else {
             let form = {};
             document.querySelectorAll('.remodal p[data-remodal-message] input').forEach(inp => {
-              if (inp.type !== 'radio' || inp.checked) form[inp.getAttribute('name')] = inp.value;
+              if (inp.type === 'checkbox') form[inp.getAttribute('name')] = inp.checked;
+              else if (inp.type !== 'radio') form[inp.getAttribute('name')] = inp.value;
             });
             self._confirm(form);
           }

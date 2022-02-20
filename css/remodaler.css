@@ -65,6 +65,18 @@
   margin: 25px 0;
 }
 
+.remodal p[data-remodal-message] {
+  max-height: calc(100vh - 220px);
+  overflow: scroll;
+}
+
+.remodal p[data-remodal-message] .input-group {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+}
+
 .remodal p[data-remodal-message] a {
   text-decoration: underline;
 }

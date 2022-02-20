@@ -57,8 +57,19 @@
   p {
     margin: 25px 0;
 
-    &[data-remodal-message] a {
-      text-decoration: underline;
+    &[data-remodal-message] {
+      max-height: calc(100vh - 220px);
+      overflow: scroll;
+
+      .input-group {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+      }
+
+      a {
+        text-decoration: underline;
+      }
     }
   }
 

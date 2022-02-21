@@ -25,6 +25,7 @@
   * {
     font: inherit;
     font-family: sans-serif;
+    box-sizing: border-box;
   }
 
   align-self: center;
@@ -60,12 +61,6 @@
     &[data-remodal-message] {
       max-height: calc(100vh - 220px);
       overflow: scroll;
-
-      .input-group {
-        display: grid;
-        grid-auto-flow: column;
-        gap: 10px;
-      }
 
       a {
         text-decoration: underline;
@@ -147,8 +142,7 @@
   textarea,
   select {
     width: 100%;
-    height: 2em;
-    font-size: 1.2em;
+    height: 1.8em;
   }
 
   input[type='radio'],
@@ -163,16 +157,19 @@
     padding: 15px;
     min-width: 320px;
     width: 100%;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  .remodal p {
-    margin: 10px 0;
-  }
+    p {
+      margin: 10px 0;
+    }
 
-  .remodal .remodal-confirm,
-  .remodal .remodal-cancel {
-    width: 130px;
-    font-size: 0.85em;
-    margin-left: 4px;
+    .remodal-confirm,
+    .remodal-cancel {
+      width: 130px;
+      font-size: 0.85em;
+      margin-left: 4px;
+    }
   }
 }

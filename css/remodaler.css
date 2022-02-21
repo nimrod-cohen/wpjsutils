@@ -159,6 +159,7 @@
 .remodal select {
   width: 100%;
   height: 1.8em;
+  margin: 0;
 }
 
 .remodal input[type='radio'],

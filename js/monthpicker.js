@@ -4,29 +4,15 @@ class MonthPicker {
   constructor() {
     let date = new Date();
     this.state.set('current-year', date.getFullYear());
-    let selected = {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1
-    };
 
     //set default value
-    this.state.set('selected', selected);
+    this.state.set('selected', { year: null, month: null });
     this.state.set('visible', false);
     this.state.set('current-picker', null);
 
     //init events
-    JSUtils.addGlobalEventListener(
-      document,
-      '.monthpicker-container .years .promote',
-      'click',
-      this.promoteYear
-    );
-    JSUtils.addGlobalEventListener(
-      document,
-      '.monthpicker-container .months > div',
-      'click',
-      this.chooseMonth
-    );
+    JSUtils.addGlobalEventListener(document, '.monthpicker-container .years .promote', 'click', this.promoteYear);
+    JSUtils.addGlobalEventListener(document, '.monthpicker-container .months > div', 'click', this.chooseMonth);
 
     //catch events out of scope and close picker
     document.addEventListener('click', this.hidePicker);
@@ -34,12 +20,10 @@ class MonthPicker {
     ///attach picker functionallity to all dom elements.
     let inputs = document.querySelectorAll('.monthpicker');
     inputs.forEach(input => {
-      input.setAttribute('year', selected.year);
-      input.setAttribute('month', selected.month);
-      input.value = `${selected.month
-        .toString()
-        .padStart(2, '0')}/${selected.year.toString().padStart(4, '0')}`;
-
+      if (input.value) {
+        input.setAttribute('year', input.value.substring(3));
+        input.setAttribute('month', input.value.substring(0, 2));
+      }
       input.addEventListener('focus', () => this.showPicker(input));
     });
 
@@ -53,9 +37,7 @@ class MonthPicker {
     let input = this.state.get('current-picker');
     if (!input) return;
 
-    input.value = `${selected.month
-      .toString()
-      .padStart(2, '0')}/${selected.year.toString().padStart(4, '0')}`;
+    input.value = `${selected.month.toString().padStart(2, '0')}/${selected.year.toString().padStart(4, '0')}`;
     input.setAttribute('year', selected.year);
     input.setAttribute('month', selected.month);
   };
@@ -74,7 +56,7 @@ class MonthPicker {
     if (!container) {
       this.state.set('current-picker', null);
       this.state.set('visible', false);
-      this.state.set('selected', null);
+      this.state.set('selected', { year: null, month: null });
       return;
     }
 
@@ -84,7 +66,8 @@ class MonthPicker {
     } else {
       this.state.set('current-picker', null);
       this.state.set('visible', false);
-      this.state.set('selected', null);
+      this.state.set('selected', { year: null, month: null });
+      this.render();
     }
   };
 
@@ -118,11 +101,15 @@ class MonthPicker {
 
     //load selection from persistance
     let input = this.state.get('current-picker');
-    let selected = {
-      month: parseInt(input.getAttribute('month')),
-      year: parseInt(input.getAttribute('year'))
-    };
-    this.state.set('selected', selected);
+    if (input.getAttribute('month')) {
+      let selected = {
+        month: parseInt(input.getAttribute('month')),
+        year: parseInt(input.getAttribute('year'))
+      };
+      this.state.set('selected', selected);
+    } else {
+      this.render();
+    }
   };
 
   render = () => {
@@ -177,9 +164,7 @@ class MonthPicker {
     container.style.left = `${pos.left}px`;
 
     container.querySelector('.years #mp-year').innerText = currentYear;
-    container
-      .querySelectorAll('.months > div')
-      .forEach(month => month.classList.remove('selected'));
+    container.querySelectorAll('.months > div').forEach(month => month.classList.remove('selected'));
 
     if (currentYear === selected.year)
       container.querySelector(`.months div[data='${selected.month}']`).classList.add('selected');
@@ -194,9 +179,7 @@ class MonthPicker {
       }
     } else {
       container.querySelector('.years .promote.next').classList.remove('disabled');
-      container
-        .querySelectorAll('.months > div')
-        .forEach(month => month.classList.remove('disabled'));
+      container.querySelectorAll('.months > div').forEach(month => month.classList.remove('disabled'));
     }
   };
 }

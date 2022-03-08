@@ -114,7 +114,8 @@
               let name = inp.getAttribute('name');
               if (!name) return;
               if (inp.type === 'checkbox') form[name] = inp.checked;
-              else if (inp.type !== 'radio') form[name] = inp.value;
+              //if radio - take value only if checked, otherwise ignore
+              else if (inp.type !== 'radio' || inp.checked) form[name] = inp.value;
             });
             self._confirm(form);
           }

@@ -3,7 +3,12 @@ JSUtils.loadDisposableEmailDomains = async () => {
     if (JSUtils.disposable_email_domains) return;
 
     JSUtils.unlikely_email_domains = {
+      'gnail.com': 'gmail.com',
+      'gimil.com': 'gmail.com',
       'gmail.co': 'gmail.com',
+      'gmail.co.il': 'gmail.com',
+      'gimail.com': 'gmail.com',
+      'gameil.com': 'gmail.com',
       'gmail.con': 'gmail.com',
       'gamil.com': 'gmail.com',
       'gimal.com': 'gmail.com',
@@ -13,10 +18,14 @@ JSUtils.loadDisposableEmailDomains = async () => {
       'gmaill.com': 'gmail.com',
       'gmsil.com': 'gmail.com',
       'yaoo.com': 'yahoo.com',
+      'tahoo.com': 'yahoo.com',
       'yahoo.con': 'yahoo.com',
       'yhaoo.com': 'yahoo.com',
       'walka.co.il': 'walla.co.il',
-      'wall.co.il': 'walla.co.il'
+      'wall.co.il': 'walla.co.il',
+      'wall.com': 'walla.com',
+      'walka.com': 'walla.com',
+      'hitmail.com': 'hotmail.com'
     };
 
     let result = await (

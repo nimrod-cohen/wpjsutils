@@ -8,6 +8,8 @@ class InfinityScroll {
   constructor(element, callback) {
     this.callback = callback;
     this.element = typeof element === 'string' ? document.querySelector(element) : element;
+    if (!this.element) return;
+
     this.element.addEventListener('scroll', this.handleScroll);
     this.handleScroll();
   }

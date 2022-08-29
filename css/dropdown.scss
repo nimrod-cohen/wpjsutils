@@ -1,0 +1,31 @@
+.menu-wrapper {
+  position: relative;
+
+  ul.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    border: solid 1px #aaa;
+    border-radius: 3px;
+    margin: 0;
+    padding: 4px 0;
+    background-color: white;
+
+    &.visible {
+      display: block;
+    }
+
+    .menu-option {
+      white-space: nowrap;
+      text-align: left;
+      padding: 7px 11px;
+      cursor: pointer;
+      font-size: 0.8rem;
+
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+}

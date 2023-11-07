@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .popover {
   position: absolute;
   color: white;
@@ -13,10 +14,9 @@
 }
 
 .popover::after {
-  content: '\25BC';
+  content: "▼";
   color: black;
   position: absolute;
   bottom: -11px;
   left: 4px;
-}
-/*# sourceMappingURL=popover.css.map */
+}/*# sourceMappingURL=popover.css.map */

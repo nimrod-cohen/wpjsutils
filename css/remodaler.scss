@@ -48,6 +48,12 @@
     }
   }
 
+  .remodal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .remodal-confirm,
   .remodal-cancel {
     float: right;

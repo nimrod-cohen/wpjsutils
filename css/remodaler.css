@@ -8,9 +8,7 @@
 
 .remodal-bg {
   display: none;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   position: fixed;
   height: 100%;
   width: 100%;
@@ -18,71 +16,62 @@
   left: 0;
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 99999;
 }
 
 .remodal {
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
   position: relative;
   max-width: 800px;
   min-width: 500px;
   background: white;
   margin: 0 auto;
   padding: 20px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border-radius: 4px;
 }
-
 .remodal * {
   font: inherit;
   font-family: sans-serif;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 .remodal .remodal-header {
   border-bottom: solid 1px lightgray;
   padding-bottom: 20px;
 }
-
 .remodal .remodal-header h2 {
   text-align: center;
   margin: 0;
 }
-
+.remodal .remodal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .remodal .remodal-confirm,
 .remodal .remodal-cancel {
   float: right;
   margin-left: 10px;
   width: 160px;
 }
-
 .remodal p {
   margin: 25px 0;
 }
-
 .remodal p[data-remodal-message] {
   max-height: calc(100vh - 220px);
   overflow: scroll;
 }
-
 .remodal p[data-remodal-message] a {
   text-decoration: underline;
 }
-
 .remodal button[data-remodal-action] {
   cursor: pointer;
   text-decoration: none;
   outline: 0;
   border: 0;
 }
-
 .remodal .remodal-close,
 .remodal .remodal-close:before {
   display: block;
@@ -95,65 +84,50 @@
   position: absolute;
   background: transparent;
   cursor: pointer;
-  -webkit-transition: color 0.2s;
   transition: color 0.2s;
   color: #95979c;
   padding: 0;
   margin: 0;
 }
-
 .remodal .remodal-close:hover {
   color: black;
 }
-
 .remodal .remodal-confirm {
   color: #fff;
   background: var(--button);
 }
-
 .remodal .remodal-cancel {
   color: var(--button-secondary-text);
   background: var(--button-secondary);
 }
-
 .remodal .remodal-cancel,
 .remodal .remodal-confirm {
   display: inline-block;
   vertical-align: middle;
   min-width: 110px;
   padding: 12px 0;
-  -webkit-transition: background 0.2s;
   transition: background 0.2s;
   text-align: center;
   margin-left: 10px;
   cursor: pointer;
 }
-
 .remodal .remodal-form-line {
   margin-bottom: 10px;
 }
-
 .remodal .remodal-form-line .remodal-form-line-title {
   font-size: 1rem;
 }
-
 .remodal .radio-option {
   display: block;
   line-height: 2.2rem;
 }
-
-.remodal .radio-option input[type='radio'] {
+.remodal .radio-option input[type=radio] {
   height: 1.2rem;
   width: 1.2rem;
-  display: -ms-inline-grid;
   display: inline-grid;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  justify-content: center;
+  align-content: center;
 }
-
 .remodal input,
 .remodal textarea,
 .remodal select {
@@ -161,9 +135,8 @@
   height: 1.8em;
   margin: 0;
 }
-
-.remodal input[type='radio'],
-.remodal input[type='checkbox'] {
+.remodal input[type=radio],
+.remodal input[type=checkbox] {
   width: 1rem;
   height: 1rem;
 }
@@ -175,8 +148,7 @@
     width: 100%;
   }
   .remodal * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
   }
   .remodal p {
     margin: 10px 0;
@@ -187,5 +159,4 @@
     font-size: 0.85em;
     margin-left: 4px;
   }
-}
-/*# sourceMappingURL=remodaler.css.map */
+}/*# sourceMappingURL=remodaler.css.map */

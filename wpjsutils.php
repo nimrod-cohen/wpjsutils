@@ -3,10 +3,10 @@
 * Plugin Name: WPJSUtils
 * Plugin URI: https://google.com?q=who+is+the+dude/
 * Description: A set of JS utilities for WP development
-* Version: 1.2.1
+* Version: 1.2.2
 * Author: Nimrod Cohen
 * Author URI: https://google.com/?q=who+is+the+dude
-* Tested up to: 5.8.2
+* Tested up to: 6.4.0
 * Requires: 5.0.0 or higher
 * License: GPLv3 or later
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html

@@ -44,7 +44,10 @@ window.JSUtils = window.JSUtils || {
     if (typeof parent === 'string') parent = document.querySelector(parent);
     parent.addEventListener(eventName, e => {
       parent.querySelectorAll(selector).forEach(elem => {
-        if (elem.isSameNode(e.target)) {
+        if (elem.isSameNode(e.target) || elem.contains(e.target)) {
+          e.preventDefault();
+          e.stopPropagation();
+
           fn(e, elem);
         }
       });

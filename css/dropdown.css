@@ -1,7 +1,6 @@
 .menu-wrapper {
   position: relative;
 }
-
 .menu-wrapper ul.dropdown-menu {
   display: none;
   position: absolute;
@@ -13,11 +12,9 @@
   padding: 4px 0;
   background-color: white;
 }
-
 .menu-wrapper ul.dropdown-menu.visible {
   display: block;
 }
-
 .menu-wrapper ul.dropdown-menu .menu-option {
   white-space: nowrap;
   text-align: left;
@@ -25,8 +22,6 @@
   cursor: pointer;
   font-size: 0.8rem;
 }
-
 .menu-wrapper ul.dropdown-menu .menu-option:hover {
   background-color: #eee;
-}
-/*# sourceMappingURL=dropdown.css.map */
+}/*# sourceMappingURL=dropdown.css.map */

@@ -3,37 +3,28 @@
   margin: 0;
   padding: 0;
   top: 0;
-  display: -ms-grid;
   display: grid;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   border: 0;
   width: 100%;
   height: 0;
   background-color: transparent;
 }
-
 .notification_wrapper .notification {
   position: relative;
   top: 60px;
   background-color: white;
   border: solid 1px #ddd;
   border-radius: 4px;
-  -webkit-box-shadow: 0px 0px 10px 0px #0000001f;
-          box-shadow: 0px 0px 10px 0px #0000001f;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1215686275);
   padding: 20px;
 }
-
 .notification_wrapper .notification.info {
   border-color: #4a4aaf;
 }
-
 .notification_wrapper .notification.success {
-  border-color: #14ebb5;
+  border-color: rgb(20, 235, 181);
 }
-
 .notification_wrapper .notification.error {
   border-color: #e61364;
-}
-/*# sourceMappingURL=notifications.css.map */
+}/*# sourceMappingURL=notifications.css.map */

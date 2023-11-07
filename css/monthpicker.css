@@ -9,8 +9,7 @@
 }
 
 .monthpicker-container {
-  -webkit-box-shadow: 0px 0px 15px 0px #0000001f;
-          box-shadow: 0px 0px 15px 0px #0000001f;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1215686275);
   background-color: white;
   position: absolute;
   border: solid 1px var(--table-borders);
@@ -18,77 +17,54 @@
   padding: 20px;
   display: none;
 }
-
 .monthpicker-container.visible {
   display: block;
 }
-
 .monthpicker-container * {
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
-
 .monthpicker-container .years {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin-bottom: 10px;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
-
 .monthpicker-container .years .promote {
   cursor: pointer;
   padding: 0 8px;
   border-radius: 2px;
 }
-
 .monthpicker-container .years .promote:hover {
   background-color: var(--button-hover);
 }
-
 .monthpicker-container .years .promote.disabled, .monthpicker-container .years .promote.disabled:hover {
   background-color: unset;
   color: #b4b4b4;
   cursor: default;
 }
-
 .monthpicker-container .years #mp-year {
   text-align: center;
 }
-
 .monthpicker-container .months {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 40px 40px 40px;
-      grid-template-columns: 40px 40px 40px;
+  grid-template-columns: 40px 40px 40px;
   gap: 8px;
 }
-
 .monthpicker-container .months div {
-  display: -ms-grid;
   display: grid;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   cursor: pointer;
   border-radius: 2px;
 }
-
 .monthpicker-container .months div:hover {
   background-color: var(--button-hover);
 }
-
 .monthpicker-container .months div.selected {
   background-color: var(--selected);
 }
-
 .monthpicker-container .months div.disabled, .monthpicker-container .months div.disabled:hover {
   background-color: unset;
   color: #b4b4b4;
   cursor: default;
-}
-/*# sourceMappingURL=monthpicker.css.map */
+}/*# sourceMappingURL=monthpicker.css.map */

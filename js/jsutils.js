@@ -40,13 +40,13 @@ window.JSUtils = window.JSUtils || {
   },
 
   //listen to an event with selector dynamically. the selector might yield empty result during assignment
-  addGlobalEventListener: (parent, selector, eventName, fn) => {
+  addGlobalEventListener: (parent, selector, eventName, fn, preventDefault = true, stopPropagation = true) => {
     if (typeof parent === 'string') parent = document.querySelector(parent);
     parent.addEventListener(eventName, e => {
       parent.querySelectorAll(selector).forEach(elem => {
         if (elem.isSameNode(e.target) || elem.contains(e.target)) {
-          e.preventDefault();
-          e.stopPropagation();
+          preventDefault && e.preventDefault();
+          stopPropagation && e.stopPropagation();
 
           fn(e, elem);
         }

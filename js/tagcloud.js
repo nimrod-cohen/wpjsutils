@@ -1,7 +1,28 @@
+/**
+ * Class representing a tag cloud component
+ */
 class TagCloud {
   state = window.StateManagerFactory();
 
-  constructor({ container, initialValues, callback }) {
+  /**
+   * Create a tag cloud component.
+   * @param {DOMElement} container - the containing div, should be empty dom elemenet.
+   * @param {Array} initialValues - initial tag list.
+   * @param {function} callback - a callback function to update the list of tags
+   * @param {Object} options - a set of options:
+   *  unique - should the list be unique values,
+   *  ignoreCase - should the uniqueness be kept with case insensitivity.
+   *  lowerCase - should the tags be low cased before saving
+   */
+  constructor({ container, initialValues, callback, options }) {
+    let opts = {
+      unique: true,
+      lowerCase: true,
+      ...options
+    };
+
+    this.state.set('options', opts);
+
     this.state.listen('tags', this.render);
     container.classList.add('tag-cloud');
     this.state.set('container', container);
@@ -21,7 +42,16 @@ class TagCloud {
     e.stopPropagation();
     e.preventDefault();
 
-    let newTags = [...this.state.get('tags'), e.target.value];
+    let val = e.target.value.trim();
+
+    const options = this.state.get('options');
+    const tags = this.state.get('tags');
+
+    if (options.lowerCase) val = val.toLowerCase();
+
+    if (options.unique && tags.includes(val)) return;
+
+    let newTags = [...tags, val];
     e.target.value = '';
     this.state.set('tags', newTags);
     this.state.get('callback')(newTags);

@@ -1,0 +1,38 @@
+.tag-cloud {
+  border: solid 1px #cccccc;
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  background: white;
+  max-width: 100%;
+  row-gap: 4px;
+  column-gap: 4px;
+
+  .tag {
+    cursor: default;
+    border: solid 1px #cccccc;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    background: #f2f2f2;
+    gap: 4px;
+    width: max-content;
+    border-radius: 3px;
+
+    i.remove-tag {
+      cursor: pointer;
+      transform: rotate(45deg);
+      font-style: normal;
+    }
+  }
+
+  input.new-tag-input {
+    border: 0;
+    background: transparent;
+    outline: 0;
+    box-shadow: none;
+    flex-grow: 1;
+    padding: 0;
+  }
+}

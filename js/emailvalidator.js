@@ -2,31 +2,28 @@ JSUtils.loadDisposableEmailDomains = async () => {
   try {
     if (JSUtils.disposable_email_domains) return;
 
-    JSUtils.unlikely_email_domains = {
-      'gnail.com': 'gmail.com',
-      'gimil.com': 'gmail.com',
-      'gmail.co': 'gmail.com',
-      'gmail.co.il': 'gmail.com',
-      'gimail.com': 'gmail.com',
-      'gameil.com': 'gmail.com',
-      'gmail.con': 'gmail.com',
-      'gamil.com': 'gmail.com',
-      'gimal.com': 'gmail.com',
-      'gmale.com': 'gmail.com',
-      'gmil.com': 'gmail.com',
-      'gmial.com': 'gmail.com',
-      'gmaill.com': 'gmail.com',
-      'gmsil.com': 'gmail.com',
-      'yaoo.com': 'yahoo.com',
-      'tahoo.com': 'yahoo.com',
-      'yahoo.con': 'yahoo.com',
-      'yhaoo.com': 'yahoo.com',
-      'walka.co.il': 'walla.co.il',
-      'wall.co.il': 'walla.co.il',
-      'wall.com': 'walla.com',
-      'walka.com': 'walla.com',
-      'hitmail.com': 'hotmail.com'
-    };
+    JSUtils.unlikely_email_domains = [
+      {
+        test: /(?:gnail|gimil|gmail|gimail|gemail|gamil|gimal|gmale|gmal|gmai|gmil|gmial|gmaill|gmsil|g\-mail|gimeil|gmaiil)\.(?:com|con|co|co\.il|comm|comn)$/i,
+        corrected: /gmail\.com/i
+      },
+      {
+        test: /(?:yaho|tahoo|yaoo|yahoo|yhaoo)\.(?:com|con|co|co\.il|comm|comn)$/i,
+        corrected: /yahoo\.com/i
+      },
+      {
+        test: /(?:walka|wall|walla)\.(?:co\.li|co\.il)$/i,
+        corrected: /walla\.co\.il/i
+      },
+      {
+        test: /(?:walka|wall|walla)\.(?:com|con|co|comm|comn)$/i,
+        corrected: /walla\.com/i
+      },
+      {
+        test: /(?:hitmail|hotmail)\.(?:com|con|co|comm|comn)/i,
+        corrected: /hotmail\.com/i
+      }
+    ];
 
     let result = await (
       await fetch('https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json')
@@ -48,6 +45,10 @@ JSUtils.validateEmailAddress = async email => {
 
   let domain = email.split('@').pop();
 
+  for (regx of JSUtils.unlikely_email_domains) {
+    if (regx.test.test(domain) && !regx.corrected.test(domain)) return false;
+  }
+
   if (Object.keys(JSUtils.unlikely_email_domains).indexOf(domain) >= 0) return false;
 
   if (JSUtils.disposable_email_domains && JSUtils.disposable_email_domains.indexOf(domain) >= 0) return false;
@@ -57,7 +58,5 @@ JSUtils.validateEmailAddress = async email => {
     email: encodeURIComponent(email)
   });
 
-  if (!result.success) return false;
-
-  return true;
+  return !!result.success;
 };

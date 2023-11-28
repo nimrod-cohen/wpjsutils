@@ -54,6 +54,14 @@ window.JSUtils = window.JSUtils || {
     });
   },
 
+  formatCurrency: ({ sum, currency = 'ILS', locale = 'he-IL', fractions = 2 }) => {
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currency,
+      maximumFractionDigits: fractions
+    }).format(sum);
+  },
+
   fetch: async (url, values) => {
     let response = await fetch(url, {
       method: 'POST',

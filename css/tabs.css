@@ -1,0 +1,36 @@
+.wpjsutils-tabs .tab-list {
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+.wpjsutils-tabs .tab-list li {
+  border: solid 1px gray;
+  border-radius: 3px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+  padding: 6px 8px;
+  padding-bottom: 5px;
+  margin: 0;
+  cursor: pointer;
+}
+.wpjsutils-tabs .tab-list li.active {
+  background: white;
+}
+.wpjsutils-tabs .panel {
+  position: relative;
+  top: -1px;
+  z-index: 1;
+  display: none;
+  padding: 20px;
+  background: white;
+  border: solid 1px gray;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+}
+.wpjsutils-tabs .panel.active {
+  display: block;
+}/*# sourceMappingURL=tabs.css.map */

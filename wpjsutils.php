@@ -3,7 +3,7 @@
  * Plugin Name: WPJSUtils
  * Plugin URI: https://google.com?q=who+is+the+dude/
  * Description: A set of JS utilities for WP development
- * Version: 1.3.3
+ * Version: 1.4.0
  * Author: Nimrod Cohen
  * Author URI: https://google.com/?q=who+is+the+dude
  * Tested up to: 6.4.1
@@ -53,11 +53,9 @@ class WPJSUtils {
     wp_enqueue_style('remodaler-css', plugin_dir_url(__FILE__) . 'css/remodaler.css' . $cachebust);
     wp_enqueue_script('popover-js', plugin_dir_url(__FILE__) . 'js/popover.js' . $cachebust, ["wpjsutils"]);
     wp_enqueue_style('popover-css', plugin_dir_url(__FILE__) . 'css/popover.css' . $cachebust);
-    wp_enqueue_script('notifications-js', plugin_dir_url(__FILE__) . 'js/notifications.js?' . $cachebust, ["wpjsutils"]);
+    wp_enqueue_script('notifications-js', plugin_dir_url(__FILE__) . 'js/notifications.js' . $cachebust, ["wpjsutils"]);
     wp_enqueue_style('notifications-css', plugin_dir_url(__FILE__) . 'css/notifications.css' . $cachebust);
-
     wp_enqueue_script('infinity-js', plugin_dir_url(__FILE__) . 'js/infinityscroll.js' . $cachebust, ["wpjsutils"]);
-
     wp_enqueue_script('monthpicker-js', plugin_dir_url(__FILE__) . 'js/monthpicker.js' . $cachebust, ["wpjsutils"]);
     wp_enqueue_style('monthpicker-css', plugin_dir_url(__FILE__) . 'css/monthpicker.css' . $cachebust);
     wp_enqueue_script('switch-js', plugin_dir_url(__FILE__) . 'js/switch.js' . $cachebust, ["wpjsutils"]);
@@ -66,6 +64,8 @@ class WPJSUtils {
     wp_enqueue_style('dropdown-css', plugin_dir_url(__FILE__) . 'css/dropdown.css' . $cachebust);
     wp_enqueue_script('tagcloud-js', plugin_dir_url(__FILE__) . 'js/tagcloud.js' . $cachebust, ["wpjsutils"]);
     wp_enqueue_style('tagcloud-css', plugin_dir_url(__FILE__) . 'css/tagcloud.css' . $cachebust);
+    wp_enqueue_script('tabs-js', plugin_dir_url(__FILE__) . 'js/tabs.js' . $cachebust, ["wpjsutils"]);
+    wp_enqueue_style('tabs-css', plugin_dir_url(__FILE__) . 'css/tabs.css' . $cachebust);
 
     wp_localize_script('wpjsutils',
       'wpjsutils_data', [

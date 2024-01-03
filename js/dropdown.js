@@ -18,6 +18,7 @@ class Dropdown {
   };
 
   click = e => {
+    e.preventDefault();
     e.stopPropagation();
 
     let open = this.state.get('open');

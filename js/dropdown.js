@@ -46,7 +46,7 @@ class Dropdown {
       let menuOptions =
         `<ul class='dropdown-menu'>` +
         options.reduce((agg, curr, idx) => {
-          agg += `<div class='menu-option' data-action-id=${idx}>${curr.text}</div>`;
+          agg += `<li class='menu-option' data-action-id=${idx}>${curr.text}</li>`;
           return agg;
         }, '') +
         '</ul>';

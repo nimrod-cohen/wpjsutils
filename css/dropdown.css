@@ -18,6 +18,7 @@
 .menu-wrapper ul.dropdown-menu .menu-option {
   white-space: nowrap;
   text-align: left;
+  margin: 0;
   padding: 7px 11px;
   cursor: pointer;
   font-size: 0.8rem;

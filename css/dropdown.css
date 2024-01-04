@@ -11,6 +11,7 @@
   margin: 0;
   padding: 4px 0;
   background-color: white;
+  z-index: 99999;
 }
 .menu-wrapper ul.dropdown-menu.visible {
   display: block;

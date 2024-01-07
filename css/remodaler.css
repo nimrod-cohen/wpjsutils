@@ -23,12 +23,15 @@
 
 .remodal {
   align-self: center;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   max-width: 800px;
   min-width: 500px;
   background: white;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
   border-radius: 4px;
 }
@@ -38,33 +41,76 @@
   box-sizing: border-box;
 }
 .remodal .remodal-header {
-  border-bottom: solid 1px lightgray;
-  padding-bottom: 20px;
+  border-bottom: solid 1px gainsboro;
+  padding: 20px;
+  cursor: grab;
+}
+.remodal .remodal-header.grabbing {
+  cursor: grabbing;
 }
 .remodal .remodal-header h2 {
   text-align: center;
   margin: 0;
+  font-size: 1.3rem;
 }
 .remodal .remodal-body {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.remodal .remodal-confirm,
-.remodal .remodal-cancel {
-  float: right;
-  margin-left: 10px;
-  width: 160px;
+.remodal .remodal-body p {
+  margin: 0;
+  margin-bottom: 12px;
 }
-.remodal p {
-  margin: 25px 0;
-}
-.remodal p[data-remodal-message] {
+.remodal .remodal-body p[data-remodal-message] {
   max-height: calc(100vh - 220px);
   overflow: scroll;
 }
-.remodal p[data-remodal-message] a {
+.remodal .remodal-body p[data-remodal-message] a {
   text-decoration: underline;
+}
+.remodal .remodal-body > p {
+  margin: 0;
+}
+.remodal .remodal-body input,
+.remodal .remodal-body textarea,
+.remodal .remodal-body select {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+.remodal .remodal-body input,
+.remodal .remodal-body select {
+  height: 1.8em;
+}
+.remodal .remodal-body input[type=radio],
+.remodal .remodal-body input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+}
+.remodal .remodal-body .radio-option {
+  display: block;
+  line-height: 2.2rem;
+}
+.remodal .remodal-body .radio-option input[type=radio] {
+  height: 1.2rem;
+  width: 1.2rem;
+  display: inline-grid;
+  justify-content: center;
+  align-content: center;
+}
+.remodal .remodal-footer {
+  padding: 20px;
+  border-top: solid 1px gainsboro;
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+.remodal .remodal-footer .remodal-confirm,
+.remodal .remodal-footer .remodal-cancel {
+  margin-left: 10px;
+  width: 160px;
 }
 .remodal button[data-remodal-action] {
   cursor: pointer;
@@ -116,32 +162,6 @@
 }
 .remodal .remodal-form-line .remodal-form-line-title {
   font-size: 1rem;
-}
-.remodal .radio-option {
-  display: block;
-  line-height: 2.2rem;
-}
-.remodal .radio-option input[type=radio] {
-  height: 1.2rem;
-  width: 1.2rem;
-  display: inline-grid;
-  justify-content: center;
-  align-content: center;
-}
-.remodal input,
-.remodal textarea,
-.remodal select {
-  width: 100%;
-  margin: 0;
-}
-.remodal input,
-.remodal select {
-  height: 1.8em;
-}
-.remodal input[type=radio],
-.remodal input[type=checkbox] {
-  width: 1rem;
-  height: 1rem;
 }
 
 @media only screen and (max-width: 500px) {

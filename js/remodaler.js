@@ -119,7 +119,10 @@
             inps.forEach(inp => {
               let name = inp.getAttribute('name');
               if (!name) return;
-              if (inp.type === 'checkbox') form[name] = inp.checked;
+              if (inp.type === 'checkbox') {
+                form[name] = inp.checked;
+                return;
+              }
               //if radio - take value only if checked, otherwise ignore
               if (inp.type === 'radio' && !inp.checked) return;
               form[name] = inp.value;

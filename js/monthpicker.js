@@ -40,6 +40,14 @@ class MonthPicker {
     input.value = `${selected.month.toString().padStart(2, '0')}/${selected.year.toString().padStart(4, '0')}`;
     input.setAttribute('year', selected.year);
     input.setAttribute('month', selected.month);
+
+    //dispatch to anyone listening
+    var event = new Event('change', {
+      'bubbles': true,
+      'cancelable': true
+    });
+
+    input.dispatchEvent(event);
   };
 
   chooseMonth = e => {

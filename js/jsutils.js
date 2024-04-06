@@ -35,7 +35,7 @@ window.JSUtils = window.JSUtils || {
     ) {
       fn();
     } else {
-      document.addEventListener('DOMContentLoaded', fn);
+      document.addEventListener('DOMContentLoaded', fn, {once: true});
     }
   },
 

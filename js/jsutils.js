@@ -27,6 +27,24 @@ window.JSUtils = window.JSUtils || {
     return p + s4() + s4() + "-" + s4() + "-" + "4" + s4().substring(1) + "-" + s4() + "-" + s4() + s4() + s4();
   },
 
+  //deep clone an object
+  clone: obj => {
+    if (obj === null || typeof obj !== "object") {
+      return obj; // Return the value if not an object
+    }
+
+    // Create a new object or array based on the original's constructor
+    const clone = Array.isArray(obj) ? [] : {};
+
+    // Iterate through each key in the object
+    for (let key in obj) {
+      // Recursively deep clone nested objects and arrays
+      clone[key] = JSUtils.clone(obj[key]);
+    }
+
+    return clone;
+  },
+
   //wait for document to be ready
   domReady: fn => {
     if (
@@ -111,7 +129,7 @@ if (typeof window.StateManagerFactory === "undefined") {
 
         let old = this.state[item].value;
         this.state[item].value = value;
-        this.state[item].fns.forEach(fn => fn(value, old));
+        this.state[item].fns.forEach(fn => fn(value, old, JSUtils.clone(this.state)));
       };
 
       listen = (item, fn) => {

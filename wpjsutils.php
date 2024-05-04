@@ -3,7 +3,7 @@
  * Plugin Name: WPJSUtils
  * Plugin URI: https://google.com?q=who+is+the+dude/
  * Description: A set of JS utilities for WP development
- * Version: 1.5.6
+ * Version: 1.5.7
  * Author: Nimrod Cohen
  * Author URI: https://google.com/?q=who+is+the+dude
  * Tested up to: 6.4.1
@@ -69,7 +69,7 @@ class WPJSUtils {
 
     wp_localize_script('wpjsutils',
       'wpjsutils_data', [
-        'ajax_url' => admin_url('admin-ajax.php'),
+        'ajax_url' => admin_url('admin-ajax.php')
       ]);
   }
 

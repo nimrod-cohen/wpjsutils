@@ -1,35 +1,41 @@
-console.log("wpjsutils initializing");
+console.log('wpjsutils initializing');
 
 window.JSUtils = window.JSUtils || {
   copyToClipboard: text => {
     if (!navigator.clipboard) {
-      var inp = document.createElement("input");
+      var inp = document.createElement('input');
       inp.value = text;
-      inp.style.position = "fixed";
-      inp.style.top = "-1000px";
+      inp.style.position = 'fixed';
+      inp.style.top = '-1000px';
       document.body.appendChild(inp);
       inp.focus();
       inp.select();
       inp.setSelectionRange(0, 99999);
-      document.execCommand("copy");
+      document.execCommand('copy');
       document.body.removeChild(inp);
     } else {
       navigator.clipboard.writeText(text);
     }
   },
 
-  guid: (prefix = "") => {
+  guid: (prefix = '') => {
     const s4 = () =>
       Math.floor(Math.random() * 65536)
         .toString(16)
-        .padStart(4, "0");
-    let p = prefix || "";
-    return p + s4() + s4() + "-" + s4() + "-" + "4" + s4().substring(1) + "-" + s4() + "-" + s4() + s4() + s4();
+        .padStart(4, '0');
+    let p = prefix || '';
+    return p + s4() + s4() + '-' + s4() + '-' + '4' + s4().substring(1) + '-' + s4() + '-' + s4() + s4() + s4();
   },
 
   //deep clone an object
   clone: obj => {
-    if (obj === null || typeof obj !== "object") {
+    if (
+      obj === null ||
+      typeof obj !== 'object' ||
+      obj instanceof Node ||
+      obj instanceof HTMLElement ||
+      obj instanceof Element
+    ) {
       return obj; // Return the value if not an object
     }
 
@@ -48,12 +54,12 @@ window.JSUtils = window.JSUtils || {
   //wait for document to be ready
   domReady: fn => {
     if (
-      document.readyState === "complete" ||
-      (document.readyState !== "loading" && !document.documentElement.doScroll)
+      document.readyState === 'complete' ||
+      (document.readyState !== 'loading' && !document.documentElement.doScroll)
     ) {
       fn();
     } else {
-      document.addEventListener("DOMContentLoaded", fn, { once: true });
+      document.addEventListener('DOMContentLoaded', fn, { once: true });
     }
   },
 
@@ -66,7 +72,7 @@ window.JSUtils = window.JSUtils || {
       ...options
     };
 
-    if (typeof parent === "string") parent = document.querySelector(parent);
+    if (typeof parent === 'string') parent = document.querySelector(parent);
     parent.addEventListener(eventName, e => {
       parent.querySelectorAll(selector).forEach(elem => {
         if (elem.isSameNode(e.target) || (captureChildClicks && elem.contains(e.target))) {
@@ -79,9 +85,9 @@ window.JSUtils = window.JSUtils || {
     });
   },
 
-  formatCurrency: ({ sum, currency = "ILS", locale = "he-IL", fractions = 2 }) => {
+  formatCurrency: ({ sum, currency = 'ILS', locale = 'he-IL', fractions = 2 }) => {
     return new Intl.NumberFormat(locale, {
-      style: "currency",
+      style: 'currency',
       currency: currency,
       maximumFractionDigits: fractions
     }).format(sum);
@@ -89,12 +95,12 @@ window.JSUtils = window.JSUtils || {
 
   fetch: async (url, values) => {
     let response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
       },
-      credentials: "same-origin",
-      body: Object.keys(values).reduce((str, key) => `${str}&${key}=${values[key]}`, "")
+      credentials: 'same-origin',
+      body: Object.keys(values).reduce((str, key) => `${str}&${key}=${values[key]}`, '')
     });
     response = await response.json();
     return response;
@@ -102,7 +108,7 @@ window.JSUtils = window.JSUtils || {
 };
 
 //observers - call a list of functions when state changes
-if (typeof window.StateManagerFactory === "undefined") {
+if (typeof window.StateManagerFactory === 'undefined') {
   window.StateManagerFactory = () => {
     class StateManager {
       state = {};
@@ -127,9 +133,10 @@ if (typeof window.StateManagerFactory === "undefined") {
         //no change, no events
         if (!force && value === this.state[item].value) return;
 
+        let oldState = JSUtils.clone(this.state);
         let old = this.state[item].value;
         this.state[item].value = value;
-        this.state[item].fns.forEach(fn => fn(value, old, JSUtils.clone(this.state)));
+        this.state[item].fns.forEach(fn => fn(value, old, oldState));
       };
 
       listen = (item, fn) => {

@@ -34,7 +34,8 @@ window.JSUtils = window.JSUtils || {
       typeof obj !== 'object' ||
       obj instanceof Node ||
       obj instanceof HTMLElement ||
-      obj instanceof Element
+      obj instanceof Element ||
+      obj instanceof Window
     ) {
       return obj; // Return the value if not an object
     }

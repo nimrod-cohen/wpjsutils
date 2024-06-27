@@ -3,7 +3,7 @@
  * Plugin Name: WPJSUtils
  * Plugin URI: https://google.com?q=who+is+the+dude/
  * Description: A set of JS utilities for WP development
- * Version: 1.5.8
+ * Version: 1.5.9
  * Author: Nimrod Cohen
  * Author URI: https://google.com/?q=who+is+the+dude
  * Tested up to: 6.4.1
@@ -120,25 +120,25 @@ class WPJSUtils {
   }
    */
 
-  function checkEmailAddress() {
-    $result = ["success" => true];
-
+  public static function validateEmailAddress($email) {
     try {
-      $email = $_POST["email"];
+      //striping the +, because FILTER_VALIDATE_EMAIL does not like it.
+      $email = (strpos($email, '+') !== false) ? preg_replace('/\+.*@/', '@', $email) : $email;
+
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Invalid email address');
+        return false;
       }
 
       list($user, $domain) = explode('@', $email);
 
       if ($domain == 'gmail.com' && strlen($user) <= 4) {
-        throw new Exception("Gmail address too short");
+        return false;
       }
 
       $dig = shell_exec("dig MX " . $domain . " +short");
 
       if (strlen($dig) == 0) {
-        throw new Exception('Domain without MX records');
+        return false;
       }
 
       //this returns a bogus mx203.inbound-mx.org and mx203.inbound-mx.net records on the server.
@@ -149,9 +149,13 @@ class WPJSUtils {
       //    if(!$this->checkEmailSMTP($email)) throw new Exception('Failed to connect with SMTP');
       // }
     } catch (Exception $ex) {
-      $result["success"] = false;
+      return false;
     }
+    return true;
+  }
 
+  function checkEmailAddress() {
+    $result = ["success" => WPJSUtils::validateEmailAddress($_POST['email'])];
     echo json_encode($result);
     die;
   }

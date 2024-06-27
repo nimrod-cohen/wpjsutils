@@ -39,7 +39,7 @@ JSUtils.loadDisposableEmailDomains();
 
 JSUtils.validateEmailAddress = async email => {
   email = email.toLowerCase().trim();
-  var emailRE = /^(?:\w+\+?(?:[\w\-]+)?\.?)+@[\w\-]+(\.\w+){1,}$/gi;
+  var emailRE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/gi;
 
   if (!emailRE.test(email)) return false;
 

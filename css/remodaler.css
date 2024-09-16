@@ -67,6 +67,9 @@
   max-height: calc(100vh - 220px);
   overflow: scroll;
 }
+.remodal .remodal-body p[data-remodal-message].hidden {
+  display: none;
+}
 .remodal .remodal-body p[data-remodal-message] a {
   text-decoration: underline;
 }

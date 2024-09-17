@@ -65,7 +65,7 @@
 }
 .remodal .remodal-body p[data-remodal-message] {
   max-height: calc(100vh - 220px);
-  overflow: scroll;
+  overflow: auto;
 }
 .remodal .remodal-body p[data-remodal-message].hidden {
   display: none;

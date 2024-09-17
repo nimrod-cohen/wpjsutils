@@ -69,7 +69,7 @@
 
       &[data-remodal-message] {
         max-height: calc(100vh - 220px);
-        overflow: scroll;
+        overflow: auto;
 
         &.hidden {
           display: none;

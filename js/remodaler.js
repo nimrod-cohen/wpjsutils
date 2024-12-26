@@ -176,7 +176,9 @@ class Remodaler {
       })
     );
 
-    JSUtils.addGlobalEventListener(document, '.remodal', 'cancellation', this.hide);
+    JSUtils.addGlobalEventListener(document, '.remodal', 'cancellation', () => {
+      this.hide(remodal_id);
+    });
 
     JSUtils.addGlobalEventListener(document, '.remodal', 'confirmation', async () => {
       if (this._options.type !== this.types.FORM) {

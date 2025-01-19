@@ -87,7 +87,7 @@ class Remodaler {
   };
 
   hide = remodal_id => {
-    document.querySelector(`#${remodal_id}.remodal-bg`).style.display = 'none';
+    document.querySelector(`#${remodal_id}.remodal-bg`).remove();
     this._state.set('start-pos', null);
   };
 
@@ -176,11 +176,11 @@ class Remodaler {
       })
     );
 
-    JSUtils.addGlobalEventListener(document, '.remodal', 'cancellation', () => {
+    JSUtils.addGlobalEventListener(document, `#${remodal_id} .remodal`, 'cancellation', () => {
       this.hide(remodal_id);
     });
 
-    JSUtils.addGlobalEventListener(document, '.remodal', 'confirmation', async () => {
+    JSUtils.addGlobalEventListener(document, `#${remodal_id} .remodal`, 'confirmation', async () => {
       if (this._options.type !== this.types.FORM) {
         var inp = document.querySelector(`#${remodal_id} .remodal [name=remodal-data-input]`);
         let val = inp ? inp.value : null;

@@ -20,15 +20,33 @@ JSUtils.loadDisposableEmailDomains = async () => {
         corrected: /walla\.com/i
       },
       {
-        test: /(?:hitmail|hotmail)\.(?:com|con|co|comm|comn)/i,
+        test: /(?:hitmail|hotmail|htmail|hotmal|hotmil)\.(?:com|con|co|comm|comn)/i,
         corrected: /hotmail\.com/i
       }
     ];
+    // List of sources
+    const sources = [
+      'https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json',
+      'https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/refs/heads/main/disposable_email_blocklist.conf',
+      'https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt'
+    ];
 
-    let result = await (
-      await fetch('https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json')
-    ).json();
-    JSUtils.disposable_email_domains = result;
+    // Fetch all sources in parallel
+    const responses = await Promise.allSettled(sources.map(url => fetch(url).then(res => res.text())));
+
+    let mergedDomains = new Set();
+
+    responses.forEach(response => {
+      if (response.status !== 'fulfilled') return;
+      try {
+        let data = response.value.trim().split(/\r?\n/);
+        data.forEach(domain => mergedDomains.add(domain.toLowerCase()));
+      } catch (error) {
+        console.error('Error parsing domain list:', error);
+      }
+    });
+
+    JSUtils.disposable_email_domains = Array.from(mergedDomains);
   } catch (e) {
     console.error(e);
   }

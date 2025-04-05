@@ -10,22 +10,24 @@
   height: 0;
   z-index: 2147483647;
   background-color: transparent;
+
+  .notification {
+    position: relative;
+    top: 60px;
+    background-color: white;
+    border: solid 1px #ddd;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px 0px #0000001f;
+    padding: 20px;
+
+    &.info {
+      border-color: #4a4aaf;
+    }
+    &.success {
+      border-color: rgb(20, 235, 181);
+    }
+    &.error {
+      border-color: #e61364;
+    }
+  }
 }
-.notification_wrapper .notification {
-  position: relative;
-  top: 60px;
-  background-color: white;
-  border: solid 1px #ddd;
-  border-radius: 4px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1215686275);
-  padding: 20px;
-}
-.notification_wrapper .notification.info {
-  border-color: #4a4aaf;
-}
-.notification_wrapper .notification.success {
-  border-color: rgb(20, 235, 181);
-}
-.notification_wrapper .notification.error {
-  border-color: #e61364;
-}/*# sourceMappingURL=notifications.css.map */

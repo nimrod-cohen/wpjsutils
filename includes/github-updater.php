@@ -1,19 +1,17 @@
 <?php
 /*
- * Plugin name: Misha Update Checker
- * Description: This simple plugin does nothing, only gets updates from a custom server
+ * A plugin updater helper class for WordPress plugins hosted on GitHub.
  * Version: 1.4
- * Author: Misha Rudrastyh, changes by Nimrod Cohen, Oleg Shumar, Milen Petrov
- * Author URI: https://rudrastyh.com
+ * Author - Misha Rudrastyh, changes by Nimrod Cohen, Oleg Shumar, Milen Petrov
+ * Author URI - https://rudrastyh.com
  * License: GPL
  *
- * Make sure to set Author to your github user handle and Version in the plugin header
+ * Make sure to set plugin's Author to your github user handle and Version in the plugin header
  * use the .git/hooks/pre-commit and post-commit to automatically update the version number
  * in readme.md files if necessary (there's a pre-commit.sample file)
  * and create a tag with the version number
  */
 
-/**/
 namespace WPJSUtils;
 
 defined('ABSPATH') || exit;

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WPJSUtils
- * Plugin URI: https://google.com?q=who+is+the+dude/
+ * Plugin URI: https://github.com/nimrod-cohen/wpjsutils
  * Description: A set of JS utilities for WP development
- * Version: 1.6.3
- * Author: Nimrod Cohen
- * Author URI: https://google.com/?q=who+is+the+dude
+ * Version: 1.6.4
+ * Author: nimrod-cohen
+ * Author URI: https://github.com/nimrod-cohen/
  * Tested up to: 6.7.1
  * Requires: 5.0.0 or higher
  * License: GPLv3 or later

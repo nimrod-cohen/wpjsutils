@@ -14,10 +14,39 @@
 }
 
 .popover::after {
-  content: '\25BC'; /* Downward triangle */
-  color: black;
+  content: '';
   position: absolute;
-  top: 100%; /* show the arrow below the popover */
-  left: 10px;
-  margin-top: -4px;
+  border-style: solid;
+}
+
+.popover.top::after {
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px 6px 0 6px;
+  border-color: black transparent transparent transparent;
+}
+
+.popover.bottom::after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 0 6px 6px 6px;
+  border-color: transparent transparent black transparent;
+}
+
+.popover.right::after {
+  top: 50%;
+  left: -6px;
+  margin-top: -6px;
+  border-width: 6px 6px 6px 0;
+  border-color: transparent black transparent transparent;
+}
+
+.popover.left::after {
+  top: 50%;
+  right: -6px;
+  margin-top: -6px;
+  border-width: 6px 0 6px 6px;
+  border-color: transparent transparent transparent black;
 }

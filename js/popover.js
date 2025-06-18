@@ -1,37 +1,37 @@
 class Popover {
   constructor(element) {
-    // prevent double initialization
     if (element._jsutils_popover) return;
 
     this.element = element;
-    this.element.style.position = 'relative';
     this.element.addEventListener('mouseover', this.showPopover);
-
-    this.element.addEventListener('mouseleave', ev => {
-      ev.stopPropagation();
-      if (!this.element.contains(ev.relatedTarget)) {
-        this.hidePopover();
-      }
-    });
+    this.element.addEventListener('mouseleave', this.hidePopover);
 
     this.element._jsutils_popover = true;
   }
 
   showPopover = () => {
-    if (this.element.querySelector('.popover')) return;
+    if (document.querySelector('.popover')) return;
 
-    let content = this.element.getAttribute('data-content');
+    const content = this.element.getAttribute('data-content');
+    const popover = document.createElement('div');
+    popover.className = 'popover';
+    popover.textContent = content;
 
-    this.element.insertAdjacentHTML('beforeend', `<div class='popover'>${content}</div>`);
+    document.body.appendChild(popover);
 
-    let popover = this.element.querySelector('.popover');
-    popover.style.top = `${-1 * popover.getBoundingClientRect().height - 8}px`;
+    const rect = this.element.getBoundingClientRect();
+    const popoverRect = popover.getBoundingClientRect();
+
+    popover.style.top = `${rect.top + window.scrollY - popoverRect.height - 8}px`;
+    popover.style.left = `${rect.left + window.scrollX}px`;
+
+    this._popoverEl = popover;
   };
 
   hidePopover = () => {
-    let popover = this.element.querySelector('.popover');
-    if (popover) {
-      this.element.removeChild(popover);
+    if (this._popoverEl) {
+      this._popoverEl.remove();
+      this._popoverEl = null;
     }
   };
 }

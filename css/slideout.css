@@ -13,29 +13,17 @@
   width: 100%;
   top: 0;
   left: 0;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 99999;
   justify-content: flex-end;
   align-items: stretch;
 
   .slideout-panel {
-    * {
-      font: inherit;
-      font-family: sans-serif;
-      box-sizing: border-box;
-    }
-
     position: relative;
     width: 500px;
     max-width: 90vw;
     height: 100vh;
     background: white;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
@@ -51,16 +39,16 @@
     }
 
     .slideout-header {
-      border-bottom: solid 1px gainsboro;
-      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-shrink: 0;
+      padding: 20px;
+      border-bottom: 1px solid var(--separator-color);
 
       h2 {
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+        font-weight: 600;
         color: #333;
       }
 
@@ -68,46 +56,46 @@
         background: none;
         border: none;
         font-size: 24px;
-        color: #95979c;
         cursor: pointer;
+        color: #999;
         padding: 0;
         width: 30px;
         height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
-        transition: all 0.2s ease;
 
         &:hover {
           color: #333;
-          background-color: #f5f5f5;
         }
       }
     }
 
     .slideout-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
       flex: 1;
+      padding: 20px;
       overflow-y: auto;
 
-      div {
-        margin: 0;
+      .slideout-form-line {
+        margin-bottom: 15px;
 
-        &[data-panel-message] {
-          max-height: none;
-          overflow: visible;
-
-          &.hidden {
-            display: none;
+        .slideout-form-line-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 6px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          
+          input[type='checkbox'] {
+            margin-right: 8px;
+            flex-shrink: 0;
           }
+        }
 
-          a {
-            text-decoration: underline;
-          }
+        .slideout-form-select {
+          width: 100%;
         }
       }
 
@@ -145,159 +133,50 @@
         width: 1rem;
         height: 1rem;
       }
-
-      .radio-option {
-        display: flex;
-        align-items: center;
-        line-height: 1.5;
-        margin-bottom: 8px;
-
-        input[type='radio'] {
-          height: 18px;
-          width: 18px;
-        }
-
-        label {
-          margin-left: 8px;
-          cursor: pointer;
-        }
-      }
-
-      .slideout-form-line {
-        margin-bottom: 15px;
-
-        .slideout-form-line-title {
-          font-size: 14px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 6px;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          
-          input[type='checkbox'] {
-            margin-right: 8px;
-            flex-shrink: 0;
-          }
-        }
-
-        .slideout-form-select {
-          width: 100%;
-        }
-
-        .slideout-datetime-input {
-          width: 100%;
-        }
-      }
     }
 
     .slideout-footer {
-      padding: 20px;
-      border-top: solid 1px gainsboro;
       display: flex;
-      gap: 12px;
       justify-content: flex-end;
-      flex-shrink: 0;
+      gap: 10px;
+      padding: 20px;
+      border-top: 1px solid var(--separator-color);
 
-      .slideout-confirm,
-      .slideout-cancel {
-        min-width: 100px;
-        padding: 12px 20px;
+      button {
+        padding: 10px 20px;
         border: none;
         border-radius: 4px;
         font-size: 14px;
-        font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: center;
-      }
+        transition: background-color 0.2s ease;
 
-      .slideout-confirm {
-        color: #fff;
-        background: var(--button);
+        &.slideout-cancel {
+          background-color: var(--button-secondary);
+          color: var(--button-secondary-text);
 
-        &:hover {
-          background: #3a3a9f;
+          &:hover {
+            background-color: #e0e0e0;
+          }
         }
 
-        &:active {
-          transform: translateY(1px);
-        }
-      }
+        &.slideout-confirm {
+          background-color: var(--button);
+          color: white;
 
-      .slideout-cancel {
-        color: var(--button-secondary-text);
-        background: var(--button-secondary);
-        border: 1px solid #ddd;
-
-        &:hover {
-          background: #e0e0e0;
-        }
-
-        &:active {
-          transform: translateY(1px);
+          &:hover {
+            background-color: #3a3a8f;
+          }
         }
       }
     }
   }
 }
 
-/* Responsive adjustments */
 @media only screen and (max-width: 768px) {
   .slideout-bg {
     .slideout-panel {
       width: 100vw;
       max-width: 100vw;
     }
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .slideout-bg {
-    .slideout-panel {
-      .slideout-header {
-        padding: 15px;
-
-        h2 {
-          font-size: 1.1rem;
-        }
-      }
-
-      .slideout-body {
-        padding: 15px;
-        gap: 12px;
-      }
-
-      .slideout-footer {
-        padding: 15px;
-        gap: 8px;
-
-        .slideout-confirm,
-        .slideout-cancel {
-          min-width: 80px;
-          padding: 10px 16px;
-          font-size: 13px;
-        }
-      }
-    }
-  }
-}
-
-/* Animation for smooth slide-in/out */
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideOutToRight {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
   }
 }

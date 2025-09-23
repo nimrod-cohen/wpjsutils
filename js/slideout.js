@@ -61,14 +61,9 @@ class Slideout {
 
   _confirm = (panel_id, data) => {
     if (this._options.confirm) {
-      const result = this._options.confirm(data);
-      // Only close if the confirm callback doesn't return false
-      if (result !== false) {
-        this.hide(panel_id);
-      }
-    } else {
-      this.hide(panel_id);
+      this._options.confirm(data);
     }
+    this.hide(panel_id);
   };
 
   _setup = panel_id => {

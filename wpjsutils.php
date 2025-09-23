@@ -3,7 +3,7 @@
  * Plugin Name: WPJSUtils
  * Plugin URI: https://github.com/nimrod-cohen/wpjsutils
  * Description: A set of JS utilities for WP development
- * Version: 1.6.8
+ * Version: 1.6.7
  * Author: nimrod-cohen
  * Author URI: https://github.com/nimrod-cohen/
  * Tested up to: 6.7.1
@@ -72,6 +72,8 @@ if (!class_exists('WPJSUtils')) {
       wp_enqueue_style('tagcloud-css', plugin_dir_url(__FILE__) . 'css/tagcloud.css' . $cachebust);
       wp_enqueue_script('tabs-js', plugin_dir_url(__FILE__) . 'js/tabs.js' . $cachebust, ["wpjsutils"]);
       wp_enqueue_style('tabs-css', plugin_dir_url(__FILE__) . 'css/tabs.css' . $cachebust);
+      wp_enqueue_script('slideout-js', plugin_dir_url(__FILE__) . 'js/slideout.js' . $cachebust, ["wpjsutils"]);
+      wp_enqueue_style('slideout-css', plugin_dir_url(__FILE__) . 'css/slideout.css' . $cachebust);
 
       wp_localize_script('wpjsutils',
         'wpjsutils_data', [

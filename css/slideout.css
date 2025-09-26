@@ -20,7 +20,7 @@
 
   .slideout-panel {
     position: relative;
-    width: 500px;
+    width: 66.67vw;
     max-width: 90vw;
     height: 100vh;
     background: white;
@@ -76,8 +76,21 @@
       padding: 20px;
       overflow-y: auto;
 
+      .slideout-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+
+        .slideout-column-left,
+        .slideout-column-right {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
       .slideout-form-line {
-        margin-bottom: 15px;
 
         .slideout-form-line-title {
           font-size: 14px;
@@ -94,16 +107,12 @@
           }
         }
 
-        .slideout-form-select {
-          width: 100%;
-        }
       }
 
       input,
       textarea,
       select {
         width: 100%;
-        max-width: 100%;
         margin: 0;
         padding: 8px 12px;
         border: 1px solid #ddd;
@@ -143,8 +152,6 @@
       border-top: 1px solid var(--separator-color);
 
       button {
-        display: inline-block;
-        vertical-align: middle;
         min-width: 110px;
         padding: 12px 0;
         border: none;
@@ -166,11 +173,30 @@
   }
 }
 
+@media only screen and (max-width: 1200px) {
+  .slideout-bg {
+    .slideout-panel {
+      width: 80vw;
+      max-width: 80vw;
+    }
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .slideout-bg {
     .slideout-panel {
       width: 100vw;
       max-width: 100vw;
+    }
+
+    .slideout-form-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      
+      .slideout-column-left,
+      .slideout-column-right {
+        gap: 10px;
+      }
     }
   }
 }

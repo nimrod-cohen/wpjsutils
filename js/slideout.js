@@ -28,7 +28,9 @@ class Slideout {
     if (typeof this._options.type === 'undefined') this._options.type = this.types.FORM;
 
     document.querySelector(`#${panel_id} h2[data-panel-title]`).innerText = this._options.title;
-    document.querySelector(`#${panel_id} div[data-panel-message]`).innerHTML = this._options.message;
+    
+    const messageContainer = document.querySelector(`#${panel_id} div[data-panel-message]`);
+    messageContainer.innerHTML = this._layout(this._options.message);
 
     document.querySelector(`#${panel_id} button[data-panel-action='confirm']`).innerText =
       this._options.confirmText || 'Confirm';
@@ -156,6 +158,20 @@ class Slideout {
         }
       }
     );
+  };
+
+  _layout = (message) => {
+    const temp = document.createElement('div');
+    temp.innerHTML = message;
+    const lines = temp.querySelectorAll('.slideout-form-line');
+    
+    const [left, right] = [[], []];
+    lines.forEach((line, i) => (i % 2 ? right : left).push(line.outerHTML));
+    
+    return `<div class="slideout-form-grid">
+      <div class="slideout-column-left">${left.join('')}</div>
+      <div class="slideout-column-right">${right.join('')}</div>
+    </div>`;
   };
 }
 

@@ -1,21 +1,22 @@
 .menu-wrapper {
-  position: relative;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  display: none;
+  z-index: 9999;
+
+  &.visible {
+    display: block;
+  }
 
   ul.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 0px;
     border: solid 1px #aaa;
+    display: inline-block;
     border-radius: 3px;
     margin: 0;
     padding: 4px 0;
     background-color: white;
     z-index: 99999;
-
-    &.visible {
-      display: block;
-    }
 
     .menu-option {
       white-space: nowrap;
@@ -28,6 +29,13 @@
       &:hover {
         background-color: #eee;
       }
+    }
+  }
+
+  &.rtl {
+    ul.dropdown-menu .menu-option {
+      text-align: right;
+      direction: rtl;
     }
   }
 }

@@ -1,31 +1,56 @@
+/**
+ *  Single, delegated popover manager
+ * Uses data-content attribute on elements with .tooltip class
+ */
 class Popover {
-  constructor(element) {
-    if (element._jsutils_popover) return;
+  constructor() {
+    this.popover = null;
+    this.currentTrigger = null;
+    this.TRIGGER_SELECTOR = '.tooltip[data-content]';
 
-    this.element = element;
-    this.element.addEventListener('mouseover', this.showPopover);
-    this.element.addEventListener('mouseleave', this.hidePopover);
-
-    this.element._jsutils_popover = true;
+    // bind global listeners
+    document.addEventListener('mouseover', this.handleMouseOver);
+    document.addEventListener('mouseout', this.handleMouseOut);
+    window.addEventListener('scroll', this.hide, { passive: true });
+    window.addEventListener('resize', this.hide);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
-  showPopover = () => {
-    if (document.querySelector('.popover')) return;
+  handleMouseOver = e => {
+    const trigger = e.target.closest(this.TRIGGER_SELECTOR);
+    if (!trigger || trigger === this.currentTrigger) return;
+    this.show(trigger);
+  };
 
-    const content = this.element.getAttribute('data-content');
-    let direction =
-      ['pop-top', 'pop-right', 'pop-bottom', 'pop-left'].find(dir => this.element.classList.contains(dir)) || 'pop-top';
-    direction = direction.replace('pop-', '');
+  handleMouseOut = e => {
+    const fromTrigger = e.target.closest(this.TRIGGER_SELECTOR);
+    if (!fromTrigger) return;
+    const toTrigger = e.relatedTarget && e.relatedTarget.closest(this.TRIGGER_SELECTOR);
+    if (fromTrigger !== toTrigger) this.hide();
+  };
 
-    const popover = document.createElement('div');
-    popover.className = `popover ${direction}`;
-    popover.textContent = content;
+  handleKeyDown = e => {
+    if (e.key === 'Escape') this.hide();
+  };
 
-    document.body.appendChild(popover);
+  getDirection = el => {
+    const dir = ['pop-top', 'pop-right', 'pop-bottom', 'pop-left'].find(d => el.classList.contains(d)) || 'pop-top';
+    return dir.replace('pop-', '');
+  };
 
-    const rect = this.element.getBoundingClientRect();
-    const popoverRect = popover.getBoundingClientRect();
+  show = trigger => {
+    this.hide();
+    const content = trigger.getAttribute('data-content');
+    if (!content) return;
 
+    const direction = this.getDirection(trigger);
+    this.popover = document.createElement('div');
+    this.popover.className = `popover ${direction}`;
+    this.popover.textContent = content;
+    document.body.appendChild(this.popover);
+
+    const rect = trigger.getBoundingClientRect();
+    const popoverRect = this.popover.getBoundingClientRect();
     let top, left;
 
     switch (direction) {
@@ -47,16 +72,20 @@ class Popover {
         break;
     }
 
-    popover.style.top = `${top}px`;
-    popover.style.left = `${left}px`;
+    this.popover.style.top = `${top}px`;
+    this.popover.style.left = `${left}px`;
 
-    this._popoverEl = popover;
+    this.currentTrigger = trigger;
   };
 
-  hidePopover = () => {
-    if (this._popoverEl) {
-      this._popoverEl.remove();
-      this._popoverEl = null;
+  hide = () => {
+    if (this.popover) {
+      this.popover.remove();
+      this.popover = null;
+      this.currentTrigger = null;
     }
   };
 }
+
+// instantiate once
+new Popover();

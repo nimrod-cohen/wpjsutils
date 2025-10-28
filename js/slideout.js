@@ -28,7 +28,7 @@ class Slideout {
     if (typeof this._options.type === 'undefined') this._options.type = this.types.FORM;
 
     document.querySelector(`#${panel_id} h2[data-panel-title]`).innerText = this._options.title;
-    
+
     const messageContainer = document.querySelector(`#${panel_id} div[data-panel-message]`);
     messageContainer.innerHTML = this._layout(this._options.message);
 
@@ -41,7 +41,7 @@ class Slideout {
     document.querySelector(`#${panel_id} button[data-panel-action='cancel']`).style.display = 'block';
 
     document.querySelector(`#${panel_id}`).style.display = 'flex';
-    
+
     // Trigger slide-in animation
     setTimeout(() => {
       win.classList.add('slide-in');
@@ -49,12 +49,15 @@ class Slideout {
   };
 
   hide = panel_id => {
+    if (typeof this._options?.onClose === 'function') {
+      this._options.onClose();
+    }
     const panel = document.querySelector(`#${panel_id}`);
     if (panel) {
       const slideoutPanel = panel.querySelector('.slideout-panel');
       slideoutPanel.classList.remove('slide-in');
       slideoutPanel.classList.add('slide-out');
-      
+
       setTimeout(() => {
         panel.remove();
       }, 300);
@@ -62,10 +65,16 @@ class Slideout {
   };
 
   _confirm = (panel_id, data) => {
-    if (this._options.confirm) {
-      this._options.confirm(data);
+    let close = true;
+    if (typeof this._options?.confirm === 'function') {
+      //if the user explicitly returns false, do not close
+      if (this._options.confirm(data) === false) {
+        close = false;
+      }
     }
-    this.hide(panel_id);
+    if (close) {
+      this.hide(panel_id);
+    }
   };
 
   _setup = panel_id => {
@@ -96,7 +105,7 @@ class Slideout {
     setTimeout(() => {
       const checkboxes = document.querySelectorAll(`#${panel_id} input[type='checkbox']`);
       checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('click', (e) => {
+        checkbox.addEventListener('click', e => {
           if (e.target.type === 'checkbox') {
             e.stopPropagation();
           }
@@ -105,69 +114,53 @@ class Slideout {
     }, 100);
 
     // Add event listeners
-    JSUtils.addGlobalEventListener(
-      document,
-      `#${panel_id} button[data-panel-action='close']`,
-      'click',
-      () => this.hide(panel_id)
+    JSUtils.addGlobalEventListener(document, `#${panel_id} button[data-panel-action='close']`, 'click', () =>
+      this.hide(panel_id)
     );
 
-    JSUtils.addGlobalEventListener(
-      document,
-      `#${panel_id} button[data-panel-action='cancel']`,
-      'click',
-      () => this.hide(panel_id)
+    JSUtils.addGlobalEventListener(document, `#${panel_id} button[data-panel-action='cancel']`, 'click', () =>
+      this.hide(panel_id)
     );
 
-    JSUtils.addGlobalEventListener(
-      document,
-      `#${panel_id} button[data-panel-action='confirm']`,
-      'click',
-      () => {
-        let form = {};
-        let inps = [
-          ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] input`),
-          ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] select`),
-          ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] textarea`)
-        ];
+    JSUtils.addGlobalEventListener(document, `#${panel_id} button[data-panel-action='confirm']`, 'click', () => {
+      let form = {};
+      let inps = [
+        ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] input`),
+        ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] select`),
+        ...document.querySelectorAll(`#${panel_id} .slideout-panel div[data-panel-message] textarea`)
+      ];
 
-        inps.forEach(inp => {
-          let name = inp.getAttribute('name');
-          if (!name) return;
-          if (inp.type === 'checkbox') {
-            form[name] = inp.checked;
-            return;
-          }
-          //if radio - take value only if checked, otherwise ignore
-          if (inp.type === 'radio' && !inp.checked) return;
-          form[name] = inp.value;
-        });
+      inps.forEach(inp => {
+        let name = inp.getAttribute('name');
+        if (!name) return;
+        if (inp.type === 'checkbox') {
+          form[name] = inp.checked;
+          return;
+        }
+        //if radio - take value only if checked, otherwise ignore
+        if (inp.type === 'radio' && !inp.checked) return;
+        form[name] = inp.value;
+      });
 
-        this._confirm(panel_id, form);
-      }
-    );
+      this._confirm(panel_id, form);
+    });
 
     // Close on background click
-    JSUtils.addGlobalEventListener(
-      document,
-      `#${panel_id}`,
-      'click',
-      (e) => {
-        if (e.target.id === panel_id) {
-          this.hide(panel_id);
-        }
+    JSUtils.addGlobalEventListener(document, `#${panel_id}`, 'click', e => {
+      if (e.target.id === panel_id) {
+        this.hide(panel_id);
       }
-    );
+    });
   };
 
-  _layout = (message) => {
+  _layout = message => {
     const temp = document.createElement('div');
     temp.innerHTML = message;
     const lines = temp.querySelectorAll('.slideout-form-line');
-    
+
     const [left, right] = [[], []];
     lines.forEach((line, i) => (i % 2 ? right : left).push(line.outerHTML));
-    
+
     return `<div class="slideout-form-grid">
       <div class="slideout-column-left">${left.join('')}</div>
       <div class="slideout-column-right">${right.join('')}</div>

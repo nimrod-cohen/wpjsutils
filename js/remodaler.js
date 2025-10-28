@@ -87,6 +87,10 @@ class Remodaler {
   };
 
   hide = remodal_id => {
+    if (typeof this._options?.onClose === 'function') {
+      this._options.onClose();
+    }
+
     document.querySelector(`#${remodal_id}.remodal-bg`).remove();
     this._state.set('start-pos', null);
   };

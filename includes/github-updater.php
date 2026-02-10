@@ -53,7 +53,7 @@ class GitHubPluginUpdater {
     }
 
     // Make sure we have plugin temp folder available
-    $this->_pluginTempFolderPath = $this->_masterTempFolderName . '/' . $this->plugin_slug . '_tmp';
+    $this->_pluginTempFolderPath = $this->_masterTempFolderPath . '/' . $this->plugin_slug . '_tmp';
     if (!is_dir($this->_pluginTempFolderPath)) {
       mkdir($this->_pluginTempFolderPath, 0755, true);
     }

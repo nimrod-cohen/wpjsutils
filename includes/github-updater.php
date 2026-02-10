@@ -119,10 +119,17 @@ class GitHubPluginUpdater {
         'Description' => $this->plugin_data['Description'],
         'Updates' => $this->latest_release['body']
       ],
-      'download_link' => $this->latest_release['zipball_url']
+      'download_link' => $this->get_download_url($this->latest_release['tag_name'])
     ];
 
     return (object) $plugin;
+  }
+
+  private function get_download_url($tag_name) {
+    return 'https://codeload.github.com/'
+      . $this->plugin_data['AuthorName'] . '/'
+      . $this->plugin_slug
+      . '/zip/refs/tags/' . $tag_name;
   }
 
   private function get_latest_release() {
@@ -143,7 +150,9 @@ class GitHubPluginUpdater {
     $github_api_url = 'https://api.github.com/repos/' . $this->plugin_data['AuthorName'] . '/' . $this->plugin_slug . '/releases/latest';
 
     // Make the API request to GitHub
-    $response = wp_remote_get($github_api_url);
+    $response = wp_remote_get($github_api_url, [
+      'user-agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url(),
+    ]);
     if (is_wp_error($response)) {
       return false;
     }
@@ -177,7 +186,11 @@ class GitHubPluginUpdater {
       $res->new_version = $this->latest_release["version"];
       $res->tested = $this->plugin_data["TestedUpTo"] ?? null;
 
-      $res->package = $this->process_zip_file($this->latest_release["zipball_url"]);
+      $package = $this->process_zip_file($this->get_download_url($this->latest_release['tag_name']));
+      if (is_wp_error($package) || !file_exists($package)) {
+        return $transient;
+      }
+      $res->package = $package;
 
       $transient->response[$res->plugin] = $res;
     }
@@ -218,9 +231,12 @@ class GitHubPluginUpdater {
   public function process_zip_file($file_url) {
     require_once ABSPATH . 'wp-admin/includes/file.php';
 
-    $response = wp_remote_get($file_url, array('timeout' => 300));
+    $response = wp_remote_get($file_url, [
+      'timeout' => 300,
+      'user-agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url(),
+    ]);
     if (is_wp_error($response) || 200 !== wp_remote_retrieve_response_code($response)) {
-      return 'Error downloading the zip file.';
+      return new \WP_Error('download_failed', 'Error downloading the zip file.');
     }
 
     $zip_content = $response['body'];
@@ -232,20 +248,20 @@ class GitHubPluginUpdater {
     $unzipfile = unzip_file($tmp_file, $this->_pluginTempFolderPath);
     if (is_wp_error($unzipfile)) {
       unlink($tmp_file);
-      return 'Error unzipping the file.';
+      return new \WP_Error('unzip_failed', 'Error unzipping the file.');
     }
 
     unlink($tmp_file);
     $unzipped_dirs = glob($this->_pluginTempFolderPath . '/*', GLOB_ONLYDIR);
     if (empty($unzipped_dirs)) {
-      return 'Error: No directory found after unzipping.';
+      return new \WP_Error('unzip_empty', 'Error: No directory found after unzipping.');
     }
 
     $unzipped_dir = $unzipped_dirs[0];
     $new_name = $this->_pluginTempFolderPath . '/' . $this->plugin_slug;
 
     if (!$this->safe_rename($unzipped_dir, $new_name)) {
-      return 'Error renaming the directory.';
+      return new \WP_Error('rename_failed', 'Error renaming the directory.');
     }
 
     $zip = new \ZipArchive();
@@ -261,7 +277,7 @@ class GitHubPluginUpdater {
       }
       $zip->close();
     } else {
-      return 'Error creating the .zip file.';
+      return new \WP_Error('zip_failed', 'Error creating the .zip file.');
     }
 
     return $new_zip_name;

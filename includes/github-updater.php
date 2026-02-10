@@ -243,6 +243,10 @@ class GitHubPluginUpdater {
     $tmp_file = wp_tempnam($file_url);
     file_put_contents($tmp_file, $zip_content);
 
+    // Clean temp dir to avoid stale leftovers from previous runs
+    $this->delete_directory($this->_pluginTempFolderPath);
+    mkdir($this->_pluginTempFolderPath, 0755, true);
+
     $zip = new \ZipArchive();
     if ($zip->open($tmp_file) !== true) {
       unlink($tmp_file);
@@ -260,7 +264,7 @@ class GitHubPluginUpdater {
     $unzipped_dir = $unzipped_dirs[0];
     $new_name = $this->_pluginTempFolderPath . '/' . $this->plugin_slug;
 
-    if (!$this->safe_rename($unzipped_dir, $new_name)) {
+    if ($unzipped_dir !== $new_name && !$this->safe_rename($unzipped_dir, $new_name)) {
       return new \WP_Error('rename_failed', 'Error renaming the directory.');
     }
 

@@ -31,7 +31,7 @@ class TagCloud {
     this.state.set('input-id', inputId);
 
     JSUtils.addGlobalEventListener(container, 'i.remove-tag', 'click', this.removeTag);
-    JSUtils.addGlobalEventListener(container, `#${inputId}`, 'keydown', this.addTag, false);
+    JSUtils.addGlobalEventListener(container, `#${inputId}`, 'keydown', this.addTag, { preventDefault: false, stopPropagation: false });
 
     this.state.set('tags', initialValues || []);
   }

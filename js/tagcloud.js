@@ -14,10 +14,15 @@ class TagCloud {
    *  ignoreCase - should the uniqueness be kept with case insensitivity.
    *  lowerCase - should the tags be low cased before saving
    */
+  /**
+   * @param {Array} options.suggestions - suggested tags shown below the cloud.
+   *   Each item: { label, description } or just a string.
+   */
   constructor({ container, initialValues, callback, options }) {
     let opts = {
       unique: true,
       lowerCase: true,
+      suggestions: [],
       ...options
     };
 
@@ -43,6 +48,7 @@ class TagCloud {
     e.preventDefault();
 
     let val = e.target.value.trim();
+    if (!val) return;
 
     const options = this.state.get('options');
     const tags = this.state.get('tags');
@@ -53,6 +59,23 @@ class TagCloud {
 
     let newTags = [...tags, val];
     e.target.value = '';
+    this.state.set('tags', newTags);
+    this.state.get('callback')(newTags);
+  };
+
+  addSuggestion = e => {
+    e.preventDefault();
+    const tag = e.target.closest('.tag-suggestion');
+    if (!tag) return;
+
+    let val = tag.dataset.value;
+    const options = this.state.get('options');
+    const tags = this.state.get('tags');
+
+    if (options.lowerCase) val = val.toLowerCase();
+    if (options.unique && tags.includes(val)) return;
+
+    let newTags = [...tags, val];
     this.state.set('tags', newTags);
     this.state.get('callback')(newTags);
   };
@@ -71,6 +94,7 @@ class TagCloud {
   render = () => {
     const tags = this.state.get('tags');
     const container = this.state.get('container');
+    const options = this.state.get('options');
     const inputId = this.state.get('input-id');
     if (!container.querySelector(`#${inputId}`)) {
       container.insertAdjacentHTML('beforeend', `<input class='new-tag-input' id=${inputId} type='text' value=''>`);
@@ -88,5 +112,29 @@ class TagCloud {
         `<span data-value='${tag}' class='tag'>${tag} <i class='remove-tag'>+</i></span>`
       );
     });
+
+    this.renderSuggestions(tags, options.suggestions, container);
+  };
+
+  renderSuggestions = (tags, suggestions, container) => {
+    let suggestionsEl = container.parentElement.querySelector('.tag-suggestions');
+    if (!suggestions.length) return;
+
+    if (!suggestionsEl) {
+      suggestionsEl = document.createElement('div');
+      suggestionsEl.classList.add('tag-suggestions');
+      container.after(suggestionsEl);
+      JSUtils.addGlobalEventListener(suggestionsEl, '.tag-suggestion', 'click', this.addSuggestion);
+    }
+
+    suggestionsEl.innerHTML = suggestions.map(s => {
+      const label = typeof s === 'string' ? s : s.label;
+      const desc = typeof s === 'string' ? '' : s.description;
+      const active = tags.includes(label.toLowerCase());
+      return `<span class='tag-suggestion-item'>`
+        + `<span class='tag-suggestion ${active ? 'active' : ''}' data-value='${label}'>${label}</span>`
+        + (desc ? ` — ${desc}` : '')
+        + `</span>`;
+    }).join('');
   };
 }

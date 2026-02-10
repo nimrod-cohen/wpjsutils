@@ -36,3 +36,38 @@
     padding: 0;
   }
 }
+
+.tag-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.85em;
+  color: #888;
+
+  .tag-suggestion-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tag-suggestion {
+    cursor: pointer;
+    border: solid 1px #ccc;
+    padding: 0 6px;
+    border-radius: 3px;
+    background: #fff;
+    color: #555;
+    transition: background 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: #e8f0fe;
+      border-color: #4a90d9;
+    }
+
+    &.active {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+}

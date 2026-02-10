@@ -243,13 +243,13 @@ class GitHubPluginUpdater {
     $tmp_file = wp_tempnam($file_url);
     file_put_contents($tmp_file, $zip_content);
 
-    WP_Filesystem();
-
-    $unzipfile = unzip_file($tmp_file, $this->_pluginTempFolderPath);
-    if (is_wp_error($unzipfile)) {
+    $zip = new \ZipArchive();
+    if ($zip->open($tmp_file) !== true) {
       unlink($tmp_file);
       return new \WP_Error('unzip_failed', 'Error unzipping the file.');
     }
+    $zip->extractTo($this->_pluginTempFolderPath);
+    $zip->close();
 
     unlink($tmp_file);
     $unzipped_dirs = glob($this->_pluginTempFolderPath . '/*', GLOB_ONLYDIR);

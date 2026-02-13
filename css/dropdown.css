@@ -25,9 +25,16 @@
       padding: 7px 11px;
       cursor: pointer;
       font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
 
       &:hover {
         background-color: #eee;
+      }
+
+      svg {
+        flex-shrink: 0;
       }
     }
   }

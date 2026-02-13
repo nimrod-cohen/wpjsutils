@@ -101,7 +101,7 @@ window.JSUtils = window.JSUtils || {
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
       },
       credentials: 'same-origin',
-      body: Object.keys(values).reduce((str, key) => `${str}&${key}=${values[key]}`, '')
+      body: Object.keys(values).reduce((str, key) => `${str}&${encodeURIComponent(key)}=${encodeURIComponent(values[key])}`, '')
     });
     response = await response.json();
     return response;

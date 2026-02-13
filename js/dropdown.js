@@ -87,7 +87,7 @@ class Dropdown {
             this.hide();
           } else if (typeof options[idx].text === 'function') {
             //update if needed
-            opt.textContent = options[idx].text();
+            opt.innerHTML = options[idx].text();
           }
         });
       });
@@ -98,7 +98,7 @@ class Dropdown {
     let menuOptions = document.querySelectorAll(`#${menuId} .menu-option`);
     menuOptions.forEach((opt, idx) => {
       let text = typeof options[idx].text === 'function' ? options[idx].text() : options[idx].text;
-      opt.textContent = text;
+      opt.innerHTML = text;
     });
 
     let menu = document.getElementById(menuId);

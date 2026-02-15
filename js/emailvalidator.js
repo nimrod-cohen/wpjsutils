@@ -73,7 +73,7 @@ JSUtils.validateEmailAddress = async email => {
 
   let result = await JSUtils.fetch(window.wpjsutils_data.ajax_url, {
     action: 'check_email',
-    email: encodeURIComponent(email)
+    email: email
   });
 
   return !!result.success;

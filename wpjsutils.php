@@ -3,7 +3,7 @@
  * Plugin Name: WPJSUtils
  * Plugin URI: https://github.com/nimrod-cohen/wpjsutils
  * Description: A set of JS utilities for WP development
- * Version: 1.8.6
+ * Version: 1.8.7
  * Author: nimrod-cohen
  * Author URI: https://github.com/nimrod-cohen/
  * Tested up to: 6.7.1

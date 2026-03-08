@@ -151,6 +151,15 @@ class Slideout {
         this.hide(panel_id);
       }
     });
+
+    // Close on Escape key
+    const escHandler = e => {
+      if (e.key === 'Escape') {
+        document.removeEventListener('keydown', escHandler);
+        this.hide(panel_id);
+      }
+    };
+    document.addEventListener('keydown', escHandler);
   };
 
   _layout = message => {

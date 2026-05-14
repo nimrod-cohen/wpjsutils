@@ -1,10 +1,50 @@
+/* wpjsutils — shared design tokens (cascading: defined in every component
+   stylesheet so any one of them loaded gives you the same theme). */
 :root {
-  --button: #4a4aaf;
-  --button-danger: #e61364;
-  --button-secondary: #efefef;
-  --button-secondary-text: #929292;
-  --separator-color: #f0f0f0;
+  /* Surfaces */
+  --wpjs-surface:           #ffffff;
+  --wpjs-surface-hover:     #f8fafc;
+  --wpjs-scrim:             rgba(15, 23, 42, 0.55);
+  /* Text */
+  --wpjs-text:              #0f172a;
+  --wpjs-text-muted:        #475569;
+  --wpjs-text-subtle:       #94a3b8;
+  /* Borders */
+  --wpjs-border:            #e2e8f0;
+  --wpjs-border-strong:     #cbd5e1;
+  /* Brand */
+  --wpjs-primary:           #2563eb;
+  --wpjs-primary-hover:     #1d4ed8;
+  --wpjs-primary-soft:      #eff6ff;
+  --wpjs-primary-ring:      rgba(37, 99, 235, 0.25);
+  /* Status */
+  --wpjs-info:              #2563eb;
+  --wpjs-success:           #16a34a;
+  --wpjs-warning:           #d97706;
+  --wpjs-danger:            #dc2626;
+  /* Back-compat aliases for older consumers — keep names, refresh values. */
+  --button:                 var(--wpjs-primary);
+  --button-danger:          var(--wpjs-danger);
+  --button-secondary:       #f1f5f9;
+  --button-secondary-text:  #475569;
+  --separator-color:        var(--wpjs-border);
+  /* Radii */
+  --wpjs-radius-sm:         6px;
+  --wpjs-radius:            10px;
+  --wpjs-radius-lg:         16px;
+  /* Shadows */
+  --wpjs-shadow-sm:         0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --wpjs-shadow-md:         0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 10px 25px -3px rgba(15, 23, 42, 0.10);
+  --wpjs-shadow-lg:         0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 25px 50px -12px rgba(15, 23, 42, 0.16);
+  --wpjs-shadow-popover:    0 8px 24px -4px rgba(15, 23, 42, 0.12), 0 4px 8px rgba(15, 23, 42, 0.06);
+  /* Motion */
+  --wpjs-ease:              cubic-bezier(0.16, 1, 0.3, 1);
+  --wpjs-duration:          200ms;
 }
+
+@keyframes wpjs-fade-in    { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wpjs-pop-in     { from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+                              to   { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
 .remodal-bg {
   display: none;
@@ -17,13 +57,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--wpjs-scrim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 99999;
+  animation: wpjs-fade-in var(--wpjs-duration) var(--wpjs-ease);
 
   .remodal {
     * {
       font: inherit;
-      font-family: sans-serif;
+      font-family: inherit;
       box-sizing: border-box;
     }
 
@@ -34,54 +77,58 @@
     transform: translate(-50%, -50%);
     max-width: 800px;
     min-width: 500px;
-    background: white;
+    background: var(--wpjs-surface);
+    color: var(--wpjs-text);
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: var(--wpjs-radius-lg);
+    box-shadow: var(--wpjs-shadow-lg);
+    overflow: hidden;
+    animation: wpjs-pop-in var(--wpjs-duration) var(--wpjs-ease);
 
     .remodal-header {
-      border-bottom: solid 1px gainsboro;
-      padding: 20px;
+      border-bottom: solid 1px var(--wpjs-border);
+      padding: 20px 24px;
       cursor: grab;
+      background: var(--wpjs-surface);
 
-      &.grabbing {
-        cursor: grabbing;
-      }
+      &.grabbing { cursor: grabbing; }
 
       h2 {
         text-align: center;
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--wpjs-text);
+        letter-spacing: -0.01em;
       }
     }
 
     .remodal-body {
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      color: var(--wpjs-text);
 
       p {
         margin: 0;
         margin-bottom: 12px;
+        line-height: 1.5;
 
         &[data-remodal-message] {
-          max-height: calc(100vh - 220px);
+          max-height: calc(100vh - 240px);
           overflow: auto;
 
-          &.hidden {
-            display: none;
-          }
-
+          &.hidden { display: none; }
           a {
+            color: var(--wpjs-primary);
             text-decoration: underline;
           }
         }
       }
-      > p {
-        margin: 0;
-      }
+      > p { margin: 0; }
 
       input,
       textarea,
@@ -89,16 +136,31 @@
         width: 100%;
         max-width: 100%;
         margin: 0;
+        padding: 9px 12px;
+        border: 1px solid var(--wpjs-border-strong);
+        border-radius: var(--wpjs-radius-sm);
+        background: var(--wpjs-surface);
+        color: var(--wpjs-text);
+        font-size: 14px;
+        line-height: 1.4;
+        transition: border-color var(--wpjs-duration) var(--wpjs-ease),
+                    box-shadow var(--wpjs-duration) var(--wpjs-ease);
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--wpjs-primary);
+        box-shadow: 0 0 0 3px var(--wpjs-primary-ring);
       }
       input,
-      select {
-        height: 1.8em;
-      }
+      select { height: 38px; }
 
       input[type='radio'],
       input[type='checkbox'] {
         width: 1rem;
         height: 1rem;
+        accent-color: var(--wpjs-primary);
       }
 
       .radio-option {
@@ -115,17 +177,15 @@
     }
 
     .remodal-footer {
-      padding: 20px;
-      border-top: solid 1px gainsboro;
+      padding: 16px 24px;
+      border-top: solid 1px var(--wpjs-border);
       display: flex;
-      gap: 10px;
-      justify-content: end;
+      gap: 8px;
+      justify-content: flex-end;
+      background: var(--wpjs-surface-hover);
 
       .remodal-confirm,
-      .remodal-cancel {
-        margin-left: 10px;
-        width: 160px;
-      }
+      .remodal-cancel { width: auto; min-width: 110px; }
     }
 
     button[data-remodal-action] {
@@ -133,79 +193,111 @@
       text-decoration: none;
       outline: 0;
       border: 0;
+      font-weight: 500;
     }
 
     .remodal-close,
     .remodal-close:before {
       display: block;
-      font-size: 25px;
-      width: 35px;
-      line-height: 35px;
+      font-size: 22px;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
       text-align: center;
-      top: 0;
-      left: 0;
+      top: 12px;
+      right: 12px;
+      left: auto;
       position: absolute;
       background: transparent;
       cursor: pointer;
-      transition: color 0.2s;
-      color: #95979c;
+      transition: color var(--wpjs-duration) var(--wpjs-ease),
+                  background-color var(--wpjs-duration) var(--wpjs-ease),
+                  transform var(--wpjs-duration) var(--wpjs-ease);
+      color: var(--wpjs-text-subtle);
       padding: 0;
       margin: 0;
+      border-radius: 50%;
     }
 
     .remodal-close:hover {
-      color: black;
+      color: var(--wpjs-text);
+      background-color: var(--wpjs-surface-hover);
+      transform: rotate(90deg);
+    }
+    .remodal-close:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--wpjs-primary-ring);
     }
 
     .remodal-confirm {
       color: #fff;
-      background: var(--button);
+      background: var(--wpjs-primary);
+      &:hover { background: var(--wpjs-primary-hover); }
+      &:focus-visible { box-shadow: 0 0 0 3px var(--wpjs-primary-ring); }
     }
 
     .remodal-cancel {
       color: var(--button-secondary-text);
       background: var(--button-secondary);
+      &:hover { background: #e2e8f0; }
+      &:focus-visible { box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.4); }
     }
+
     .remodal-cancel,
     .remodal-confirm {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       vertical-align: middle;
       min-width: 110px;
-      padding: 12px 0;
-      -webkit-transition: background 0.2s;
-      transition: background 0.2s;
+      padding: 10px 18px;
+      border-radius: var(--wpjs-radius-sm);
+      transition: background var(--wpjs-duration) var(--wpjs-ease),
+                  box-shadow var(--wpjs-duration) var(--wpjs-ease),
+                  transform var(--wpjs-duration) var(--wpjs-ease);
       text-align: center;
-      margin-left: 10px;
+      margin-left: 0;
       cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
     }
+    .remodal-cancel:active,
+    .remodal-confirm:active { transform: translateY(1px); }
 
     .remodal-form-line {
       margin-bottom: 10px;
       .remodal-form-line-title {
-        font-size: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--wpjs-text-muted);
+        margin-bottom: 4px;
       }
     }
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .remodal {
-    padding: 15px;
-    min-width: 320px;
-    width: 100%;
-    * {
-      box-sizing: border-box;
-    }
+  .remodal-bg .remodal {
+    min-width: 0;
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    border-radius: var(--wpjs-radius);
 
-    p {
-      margin: 10px 0;
-    }
+    .remodal-body { padding: 16px; }
+    .remodal-header { padding: 16px; }
+    .remodal-footer { padding: 12px 16px; }
 
     .remodal-confirm,
     .remodal-cancel {
-      width: 130px;
-      font-size: 0.85em;
-      margin-left: 4px;
+      min-width: 0;
+      flex: 1;
+      font-size: 0.875rem;
+      margin-left: 0;
     }
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .remodal-bg,
+  .remodal-bg .remodal { animation: none; }
 }

@@ -1,16 +1,21 @@
 .popover {
   position: absolute;
-  color: white;
-  background-color: black;
-  border-radius: 4px;
-  line-height: 16px;
+  color: #ffffff;
+  background-color: #0f172a;
+  border-radius: 6px;
+  line-height: 1.4;
   min-width: max-content;
+  max-width: 280px;
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   font-size: 12px;
-  padding: 4px 12px;
+  font-weight: 500;
+  padding: 6px 10px;
   height: max-content;
   z-index: 99999;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+  letter-spacing: 0.01em;
+  pointer-events: none;
 }
 
 .popover::after {
@@ -22,31 +27,31 @@
 .popover.top::after {
   top: 100%;
   left: 50%;
-  margin-left: -6px;
-  border-width: 6px 6px 0 6px;
-  border-color: black transparent transparent transparent;
+  margin-left: -5px;
+  border-width: 5px 5px 0 5px;
+  border-color: #0f172a transparent transparent transparent;
 }
 
 .popover.bottom::after {
   bottom: 100%;
   left: 50%;
-  margin-left: -6px;
-  border-width: 0 6px 6px 6px;
-  border-color: transparent transparent black transparent;
+  margin-left: -5px;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #0f172a transparent;
 }
 
 .popover.right::after {
   top: 50%;
-  left: -6px;
-  margin-top: -6px;
-  border-width: 6px 6px 6px 0;
-  border-color: transparent black transparent transparent;
+  left: -5px;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-color: transparent #0f172a transparent transparent;
 }
 
 .popover.left::after {
   top: 50%;
-  right: -6px;
-  margin-top: -6px;
-  border-width: 6px 0 6px 6px;
-  border-color: transparent transparent transparent black;
+  right: -5px;
+  margin-top: -5px;
+  border-width: 5px 0 5px 5px;
+  border-color: transparent transparent transparent #0f172a;
 }

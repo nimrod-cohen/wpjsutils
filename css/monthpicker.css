@@ -1,78 +1,105 @@
 :root {
-  --table-borders: #ddd;
-  --selected: rgb(131, 233, 207);
-  --button-hover: #ecfbff;
+  --table-borders:  #e2e8f0;
+  --selected:       #2563eb;
+  --selected-text:  #ffffff;
+  --button-hover:   #eff6ff;
 }
 
-.monthpicker {
-  position: relative;
+@keyframes wpjs-mp-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+
+.monthpicker { position: relative; }
 
 .monthpicker-container {
-  box-shadow: 0px 0px 15px 0px #0000001f;
-  background-color: white;
+  background-color: #ffffff;
   position: absolute;
-  border: solid 1px var(--table-borders);
-  border-radius: 4px;
-  padding: 20px;
+  border: 1px solid var(--table-borders);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.18),
+              0 4px 12px rgba(15, 23, 42, 0.08);
   display: none;
+
   &.visible {
     display: block;
+    animation: wpjs-mp-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  * {
-    user-select: none;
-  }
+  * { user-select: none; }
 
   .years {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    align-items: center;
     justify-content: space-between;
+    font-weight: 600;
+    color: #0f172a;
 
     .promote {
       cursor: pointer;
-      padding: 0 8px;
-      border-radius: 2px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background-color 140ms ease, color 140ms ease;
+      color: #475569;
+
       &:hover {
         background-color: var(--button-hover);
+        color: #1d4ed8;
       }
 
       &.disabled,
       &.disabled:hover {
-        background-color: unset;
-        color: #b4b4b4;
+        background-color: transparent;
+        color: #cbd5e1;
         cursor: default;
       }
     }
 
     #mp-year {
       text-align: center;
+      font-size: 1rem;
     }
   }
 
   .months {
     display: grid;
-    grid-template-columns: 40px 40px 40px;
-    gap: 8px;
+    grid-template-columns: 60px 60px 60px;
+    gap: 6px;
+
     div {
       display: grid;
       justify-content: center;
+      align-content: center;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: 8px;
+      padding: 8px 0;
+      font-size: 0.875rem;
+      color: #475569;
+      transition: background-color 140ms ease, color 140ms ease;
 
       &:hover {
         background-color: var(--button-hover);
+        color: #1d4ed8;
       }
-      &.selected {
+
+      &.selected,
+      &.selected:hover {
         background-color: var(--selected);
+        color: var(--selected-text);
       }
 
       &.disabled,
       &.disabled:hover {
-        background-color: unset;
-        color: #b4b4b4;
+        background-color: transparent;
+        color: #cbd5e1;
         cursor: default;
       }
     }
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monthpicker-container.visible { animation: none; }
 }

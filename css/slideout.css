@@ -1,10 +1,28 @@
 :root {
-  --button: #4a4aaf;
-  --button-danger: #e61364;
-  --button-secondary: #efefef;
-  --button-secondary-text: #929292;
-  --separator-color: #f0f0f0;
+  /* See remodaler.css for the full token list — replicated here so the
+     drawer can be used standalone. */
+  --wpjs-surface:           #ffffff;
+  --wpjs-surface-hover:     #f8fafc;
+  --wpjs-scrim:             rgba(15, 23, 42, 0.55);
+  --wpjs-text:              #0f172a;
+  --wpjs-text-muted:        #475569;
+  --wpjs-border:            #e2e8f0;
+  --wpjs-border-strong:     #cbd5e1;
+  --wpjs-primary:           #2563eb;
+  --wpjs-primary-hover:     #1d4ed8;
+  --wpjs-primary-ring:      rgba(37, 99, 235, 0.25);
+  --button:                 var(--wpjs-primary);
+  --button-secondary:       #f1f5f9;
+  --button-secondary-text:  #475569;
+  --separator-color:        var(--wpjs-border);
+  --wpjs-radius-sm:         6px;
+  --wpjs-radius:            10px;
+  --wpjs-shadow-lg:         0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 25px 50px -12px rgba(15, 23, 42, 0.16);
+  --wpjs-ease:              cubic-bezier(0.16, 1, 0.3, 1);
+  --wpjs-duration:          240ms;
 }
+
+@keyframes wpjs-slideout-fade { from { opacity: 0 } to { opacity: 1 } }
 
 .slideout-bg {
   display: none;
@@ -13,67 +31,82 @@
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--wpjs-scrim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 99999;
   justify-content: flex-end;
   align-items: stretch;
+  animation: wpjs-slideout-fade var(--wpjs-duration) var(--wpjs-ease);
 
   .slideout-panel {
     position: relative;
     width: 66.67vw;
     max-width: 90vw;
     height: 100vh;
-    background: white;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--wpjs-surface);
+    color: var(--wpjs-text);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    box-shadow: var(--wpjs-shadow-lg);
     transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform var(--wpjs-duration) var(--wpjs-ease);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
-    &.slide-in {
-      transform: translateX(0);
-    }
-
-    &.slide-out {
-      transform: translateX(100%);
-    }
+    &.slide-in { transform: translateX(0); }
+    &.slide-out { transform: translateX(100%); }
 
     .slideout-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
-      border-bottom: 1px solid var(--separator-color);
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--wpjs-border);
+      background: var(--wpjs-surface);
 
       h2 {
         margin: 0;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         font-weight: 600;
-        color: #333;
+        color: var(--wpjs-text);
+        letter-spacing: -0.01em;
       }
 
       .slideout-close {
         background: none;
-        border: none;
-        font-size: 24px;
+        border: 0;
+        font-size: 22px;
+        line-height: 1;
         cursor: pointer;
-        color: #999;
+        color: var(--wpjs-text-muted);
         padding: 0;
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 50%;
+        transition: color var(--wpjs-duration) var(--wpjs-ease),
+                    background-color var(--wpjs-duration) var(--wpjs-ease),
+                    transform var(--wpjs-duration) var(--wpjs-ease);
 
         &:hover {
-          color: #333;
+          color: var(--wpjs-text);
+          background-color: var(--wpjs-surface-hover);
+          transform: rotate(90deg);
+        }
+        &:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 3px var(--wpjs-primary-ring);
         }
       }
     }
 
     .slideout-body {
       flex: 1;
-      padding: 20px;
+      padding: 24px;
       overflow-y: auto;
 
       .slideout-form-grid {
@@ -86,27 +119,26 @@
         .slideout-column-right {
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 16px;
         }
       }
 
       .slideout-form-line {
-
         .slideout-form-line-title {
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
-          color: #333;
+          color: var(--wpjs-text);
           margin-bottom: 6px;
           display: flex;
           align-items: center;
           cursor: pointer;
-          
+
           input[type='checkbox'] {
             margin-right: 8px;
             flex-shrink: 0;
+            accent-color: var(--wpjs-primary);
           }
         }
-
       }
 
       input,
@@ -114,26 +146,27 @@
       select {
         width: 100%;
         margin: 0;
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+        padding: 9px 12px;
+        border: 1px solid var(--wpjs-border-strong);
+        border-radius: var(--wpjs-radius-sm);
+        background: var(--wpjs-surface);
+        color: var(--wpjs-text);
         font-size: 14px;
-        transition: border-color 0.2s ease;
+        transition: border-color var(--wpjs-duration) var(--wpjs-ease),
+                    box-shadow var(--wpjs-duration) var(--wpjs-ease);
 
         &:focus {
           outline: none;
-          border-color: var(--button);
-          box-shadow: 0 0 0 2px rgba(74, 170, 175, 0.1);
+          border-color: var(--wpjs-primary);
+          box-shadow: 0 0 0 3px var(--wpjs-primary-ring);
         }
       }
 
       input,
-      select {
-        height: 40px;
-      }
+      select { height: 40px; }
 
       textarea {
-        min-height: 80px;
+        min-height: 96px;
         resize: vertical;
       }
 
@@ -141,62 +174,79 @@
       input[type='checkbox'] {
         width: 1rem;
         height: 1rem;
+        accent-color: var(--wpjs-primary);
       }
     }
 
     .slideout-footer {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
-      padding: 20px;
-      border-top: 1px solid var(--separator-color);
+      gap: 8px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--wpjs-border);
+      background: var(--wpjs-surface-hover);
 
       button {
         min-width: 110px;
-        padding: 12px 0;
-        border: none;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: var(--wpjs-radius-sm);
         font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: background var(--wpjs-duration) var(--wpjs-ease),
+                    box-shadow var(--wpjs-duration) var(--wpjs-ease),
+                    transform var(--wpjs-duration) var(--wpjs-ease);
 
         &.slideout-cancel {
           color: var(--button-secondary-text);
           background: var(--button-secondary);
+          &:hover { background: #e2e8f0; }
+          &:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.4);
+          }
         }
 
         &.slideout-confirm {
           color: #fff;
-          background: var(--button);
+          background: var(--wpjs-primary);
+          &:hover { background: var(--wpjs-primary-hover); }
+          &:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--wpjs-primary-ring);
+          }
         }
+
+        &:active { transform: translateY(1px); }
       }
     }
   }
 }
 
 @media only screen and (max-width: 1200px) {
-  .slideout-bg {
-    .slideout-panel {
-      width: 80vw;
-      max-width: 80vw;
-    }
+  .slideout-bg .slideout-panel {
+    width: 80vw;
+    max-width: 80vw;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .slideout-bg {
-    .slideout-panel {
-      width: 100vw;
-      max-width: 100vw;
-    }
-
-    .slideout-form-grid {
-      grid-template-columns: 1fr;
-      gap: 15px;
-      
-      .slideout-column-left,
-      .slideout-column-right {
-        gap: 10px;
-      }
-    }
+  .slideout-bg .slideout-panel {
+    width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
   }
+  .slideout-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    .slideout-column-left,
+    .slideout-column-right { gap: 12px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slideout-bg { animation: none; }
+  .slideout-bg .slideout-panel { transition: none; }
 }

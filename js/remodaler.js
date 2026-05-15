@@ -106,10 +106,20 @@ class Remodaler {
     }
   };
 
+  // Drag the modal by its header. We override the modal's `transform`
+  // instead of nudging `left`/`top`, because the modal is `position:
+  // absolute` with no explicit `width` — shifting `left` rightward
+  // shrinks the available space to the right and the shrink-to-fit
+  // algorithm compresses the modal's width as you drag (looked like the
+  // modal was "narrowing"). Transform doesn't reflow, so width stays
+  // stable.
   _startDragging = e => {
     e.preventDefault();
-    const pos = this._state.get('start-pos');
-    this._state.set('start-pos', { x: e.clientX - (pos?.saveX || 0), y: e.clientY - (pos?.saveY || 0) });
+    const offset = this._state.get('drag-offset') || { x: 0, y: 0 };
+    this._state.set('drag-start', {
+      mouseX: e.clientX, mouseY: e.clientY,
+      offsetX: offset.x, offsetY: offset.y
+    });
     this._state.get('header').classList.add('grabbing');
 
     document.addEventListener('mousemove', this._moving);
@@ -117,13 +127,12 @@ class Remodaler {
   };
 
   _moving = e => {
-    const pos = this._state.get('start-pos');
+    const start = this._state.get('drag-start');
     const win = this._state.get('window');
-
-    win.style.top = `calc(50% + ${e.clientY - pos.y}px)`;
-    win.style.left = `calc(50% + ${e.clientX - pos.x}px)`;
-
-    this._state.set('start-pos', { x: pos.x, y: pos.y, saveX: e.clientX - pos.x, saveY: e.clientY - pos.y });
+    const dx = e.clientX - start.mouseX + start.offsetX;
+    const dy = e.clientY - start.mouseY + start.offsetY;
+    win.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    this._state.set('drag-offset', { x: dx, y: dy });
   };
 
   _endDragging = e => {

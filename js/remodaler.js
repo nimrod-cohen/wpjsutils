@@ -147,7 +147,11 @@ class Remodaler {
       `<div class='remodal-bg' id='${remodal_id}'>
         <div class='remodal' data-remodal-id='modal'>
           <div class='remodal-header'>
-            <button data-remodal-action='close' class='remodal-close'>&#x00D7;</button>
+            <button data-remodal-action='close' class='remodal-close' aria-label='Close'>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+                <path d="M2.5 2.5 L11.5 11.5 M11.5 2.5 L2.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
             <h2 data-remodal-title></h2>
           </div>
           <div class='remodal-body'>

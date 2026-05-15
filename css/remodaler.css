@@ -196,20 +196,25 @@
       font-weight: 500;
     }
 
-    .remodal-close,
-    .remodal-close:before {
-      display: block;
+    .remodal-close {
+      /* Flexbox-centering + explicit transform-origin so the X stays
+         rigidly anchored on hover. Line-height-based centering caused
+         a subpixel drift when the hover background became visible. */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-size: 22px;
+      line-height: 1;
       width: 36px;
       height: 36px;
-      line-height: 36px;
-      text-align: center;
       top: 12px;
       right: 12px;
       left: auto;
       position: absolute;
       background: transparent;
       cursor: pointer;
+      transform: rotate(0deg);
+      transform-origin: center center;
       transition: color var(--wpjs-duration) var(--wpjs-ease),
                   background-color var(--wpjs-duration) var(--wpjs-ease),
                   transform var(--wpjs-duration) var(--wpjs-ease);

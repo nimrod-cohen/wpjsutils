@@ -121,7 +121,7 @@ class Remodaler {
     const win = this._state.get('window');
 
     win.style.top = `calc(50% + ${e.clientY - pos.y}px)`;
-    win.style.left = `calc(50% + ${e.clientX - pos.x}px`;
+    win.style.left = `calc(50% + ${e.clientX - pos.x}px)`;
 
     this._state.set('start-pos', { x: pos.x, y: pos.y, saveX: e.clientX - pos.x, saveY: e.clientY - pos.y });
   };
